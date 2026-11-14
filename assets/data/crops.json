@@ -1,0 +1,578 @@
+[
+ {
+  "id": "softwheat",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 4500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/softwheat.jpg",
+  "kind": "cereal",
+  "c1": "#EBC45A",
+  "c2": "#C98A1C",
+  "names": {
+   "ar": "القمح اللين",
+   "en": "Soft wheat",
+   "fr": "Blé tendre"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "durumwheat",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 4500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/durumwheat.jpg",
+  "kind": "cereal",
+  "c1": "#E6B94E",
+  "c2": "#B8791A",
+  "names": {
+   "ar": "القمح الصلب",
+   "en": "Durum wheat",
+   "fr": "Blé dur"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "barley",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 3500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/barley.jpg",
+  "kind": "cereal",
+  "c1": "#D9C26A",
+  "c2": "#9E8A2F",
+  "names": {
+   "ar": "الشعير",
+   "en": "Barley",
+   "fr": "Orge"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "oats",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 3500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/oats.jpg",
+  "kind": "cereal",
+  "c1": "#D8D58A",
+  "c2": "#8C8A3A",
+  "names": {
+   "ar": "الخرطال",
+   "en": "Oats",
+   "fr": "Avoine"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "maize",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 7000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/maize.jpg",
+  "kind": "corn",
+  "c1": "#E9D86A",
+  "c2": "#D9A71C",
+  "names": {
+   "ar": "الذرة",
+   "en": "Maize",
+   "fr": "Maïs"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "sorghum",
+  "category": "cereal",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/sorghum.jpg",
+  "kind": "corn",
+  "c1": "#D9A27A",
+  "c2": "#A8562A",
+  "names": {
+   "ar": "الذرة الرفيعة",
+   "en": "Sorghum",
+   "fr": "Sorgho"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "fava",
+  "category": "legume",
+  "annual": true,
+  "legume": true,
+  "waterNeedM3PerHa": 3500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/fava.jpg",
+  "kind": "bean",
+  "c1": "#8FC26A",
+  "c2": "#3F7F2E",
+  "names": {
+   "ar": "الفول",
+   "en": "Fava beans",
+   "fr": "Fèves"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "chickpea",
+  "category": "legume",
+  "annual": true,
+  "legume": true,
+  "waterNeedM3PerHa": 3000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/chickpea.jpg",
+  "kind": "bean",
+  "c1": "#E0C48A",
+  "c2": "#B68A3C",
+  "names": {
+   "ar": "الحمص",
+   "en": "Chickpea",
+   "fr": "Pois chiche"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "lentil",
+  "category": "legume",
+  "annual": true,
+  "legume": true,
+  "waterNeedM3PerHa": 2800,
+  "sowMonths": [],
+  "photo": "assets/images/crops/lentil.jpg",
+  "kind": "bean",
+  "c1": "#D39A6A",
+  "c2": "#8E4A22",
+  "names": {
+   "ar": "العدس",
+   "en": "Lentils",
+   "fr": "Lentilles"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "pea",
+  "category": "legume",
+  "annual": true,
+  "legume": true,
+  "waterNeedM3PerHa": 3000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/pea.jpg",
+  "kind": "bean",
+  "c1": "#9FD27A",
+  "c2": "#4C9A34",
+  "names": {
+   "ar": "الجلبانة",
+   "en": "Peas",
+   "fr": "Petits pois"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "onion",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 6500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/onion.jpg",
+  "kind": "root",
+  "c1": "#E3B2C7",
+  "c2": "#9A4F73",
+  "names": {
+   "ar": "البصلة",
+   "en": "Onion",
+   "fr": "Oignon"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "garlic",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/garlic.jpg",
+  "kind": "root",
+  "c1": "#E8DCC8",
+  "c2": "#B9A27C",
+  "names": {
+   "ar": "التوم",
+   "en": "Garlic",
+   "fr": "Ail"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "potato",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 6000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/potato.jpg",
+  "kind": "root",
+  "c1": "#D9B987",
+  "c2": "#7A5A2B",
+  "names": {
+   "ar": "البطاطا",
+   "en": "Potato",
+   "fr": "Pomme de terre"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "carrot",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/carrot.jpg",
+  "kind": "root",
+  "c1": "#F1C79A",
+  "c2": "#E0762B",
+  "names": {
+   "ar": "الخيزو",
+   "en": "Carrot",
+   "fr": "Carotte"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "tomato",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 6500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/tomato.jpg",
+  "kind": "fruitveg",
+  "c1": "#F2B8A8",
+  "c2": "#D8402B",
+  "names": {
+   "ar": "الماطيشة",
+   "en": "Tomato",
+   "fr": "Tomate"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "pepper",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 6500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/pepper.jpg",
+  "kind": "fruitveg",
+  "c1": "#F1D49A",
+  "c2": "#D8402B",
+  "names": {
+   "ar": "الفلفلة",
+   "en": "Pepper",
+   "fr": "Poivron"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "courgette",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/courgette.jpg",
+  "kind": "fruitveg",
+  "c1": "#BFE0A0",
+  "c2": "#3F8A2E",
+  "names": {
+   "ar": "القرعة",
+   "en": "Courgette",
+   "fr": "Courgette"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "cabbage",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/cabbage.jpg",
+  "kind": "leaf",
+  "c1": "#CDE6C4",
+  "c2": "#5FA24A",
+  "names": {
+   "ar": "الكرنب",
+   "en": "Cabbage",
+   "fr": "Chou"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "watermelon",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/watermelon.jpg",
+  "kind": "melon",
+  "c1": "#BEE3A8",
+  "c2": "#2F8A3E",
+  "names": {
+   "ar": "الدلاح",
+   "en": "Watermelon",
+   "fr": "Pastèque"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "melon",
+  "category": "veg",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/melon.jpg",
+  "kind": "melon",
+  "c1": "#F4E3A0",
+  "c2": "#E2A92B",
+  "names": {
+   "ar": "الشمام",
+   "en": "Melon",
+   "fr": "Melon"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "sunflower",
+  "category": "industrial",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 5000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/sunflower.jpg",
+  "kind": "sun",
+  "c1": "#F6E39A",
+  "c2": "#F0B400",
+  "names": {
+   "ar": "عباد الشمس",
+   "en": "Sunflower",
+   "fr": "Tournesol"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "rapeseed",
+  "category": "industrial",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 4000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/rapeseed.jpg",
+  "kind": "sun",
+  "c1": "#EEF0A0",
+  "c2": "#E7C700",
+  "names": {
+   "ar": "الكولزا",
+   "en": "Rapeseed",
+   "fr": "Colza"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "sugarbeet",
+  "category": "industrial",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 7500,
+  "sowMonths": [],
+  "photo": "assets/images/crops/sugarbeet.jpg",
+  "kind": "root",
+  "c1": "#E9C7D2",
+  "c2": "#8A3A5B",
+  "names": {
+   "ar": "الشمندر السكري",
+   "en": "Sugar beet",
+   "fr": "Betterave sucrière"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "alfalfa",
+  "category": "industrial",
+  "annual": true,
+  "legume": false,
+  "waterNeedM3PerHa": 9000,
+  "sowMonths": [],
+  "photo": "assets/images/crops/alfalfa.jpg",
+  "kind": "forage",
+  "c1": "#C4E6A8",
+  "c2": "#4C9A34",
+  "names": {
+   "ar": "الفصة",
+   "en": "Alfalfa",
+   "fr": "Luzerne"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "olive",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/olive.jpg",
+  "kind": "tree",
+  "c1": "#DCE7C8",
+  "c2": "#6B7F2E",
+  "names": {
+   "ar": "الزيتون",
+   "en": "Olive",
+   "fr": "Olivier"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "almond",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/almond.jpg",
+  "kind": "tree",
+  "c1": "#F4E6E8",
+  "c2": "#C9A07A",
+  "names": {
+   "ar": "اللوز",
+   "en": "Almond",
+   "fr": "Amandier"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "grape",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/grape.jpg",
+  "kind": "vine",
+  "c1": "#E5D3EE",
+  "c2": "#6B3F86",
+  "names": {
+   "ar": "العنب",
+   "en": "Grape",
+   "fr": "Vigne"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "fig",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/fig.jpg",
+  "kind": "tree",
+  "c1": "#E8E0EE",
+  "c2": "#6A3F5B",
+  "names": {
+   "ar": "الكرموس",
+   "en": "Fig",
+   "fr": "Figuier"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "citrus",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/citrus.jpg",
+  "kind": "tree",
+  "c1": "#FBE6B8",
+  "c2": "#F28C1B",
+  "names": {
+   "ar": "الحوامض",
+   "en": "Citrus",
+   "fr": "Agrumes"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "apple",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/apple.jpg",
+  "kind": "tree",
+  "c1": "#F6D5D0",
+  "c2": "#D8402B",
+  "names": {
+   "ar": "التفاح",
+   "en": "Apple",
+   "fr": "Pommier"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "pomegranate",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/pomegranate.jpg",
+  "kind": "tree",
+  "c1": "#F3C7C4",
+  "c2": "#B52A2A",
+  "names": {
+   "ar": "الرمان",
+   "en": "Pomegranate",
+   "fr": "Grenadier"
+  },
+  "reviewed": false
+ },
+ {
+  "id": "plum",
+  "category": "tree",
+  "annual": false,
+  "legume": false,
+  "waterNeedM3PerHa": null,
+  "sowMonths": [],
+  "photo": "assets/images/crops/plum.jpg",
+  "kind": "tree",
+  "c1": "#E3D0EC",
+  "c2": "#7A3F9A",
+  "names": {
+   "ar": "البرقوق",
+   "en": "Plum",
+   "fr": "Prunier"
+  },
+  "reviewed": false
+ }
+]

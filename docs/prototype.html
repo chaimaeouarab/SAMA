@@ -1,0 +1,286 @@
+<title>SAMA Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root{--g:#0C5A3B;--g2:#2A7556;--g3:#E3F0E8;--ink:#1B2B23;--mut:#6B7A72;--bg:#F4F6F4;--line:#E6ECE8;--sh:0 6px 18px rgba(12,90,59,.12);color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#CFE0D6;color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Naskh Arabic","Noto Sans Arabic",sans-serif}
+#app{max-width:430px;min-height:100vh;margin:0 auto;background:var(--bg);position:relative;display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none;padding:0}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.screen{flex:1;overflow-y:auto;padding-bottom:84px}
+.row{display:flex;align-items:center;gap:12px}.grow{flex:1;min-width:0}
+svg{display:block}
+/* language screen */
+.lang{padding:28px 24px;display:flex;flex-direction:column;min-height:100vh;background:#fff}
+.logo{display:flex;align-items:center;gap:10px;color:var(--g);font-weight:800;letter-spacing:3px;font-size:24px}
+.lang h1{margin:40px 0 8px;font-size:34px;color:var(--g);direction:rtl;text-align:left}
+.lang p{margin:2px 0;font-size:20px;font-weight:600}.lang .sp{flex:1;min-height:40px}
+.lbtn{display:flex;align-items:center;justify-content:space-between;height:76px;padding:0 20px;margin-bottom:14px;background:#fff;border:2px solid var(--g);border-radius:24px;box-shadow:var(--sh);font-size:26px;font-weight:700;color:var(--g);width:100%;text-align:start}
+.spk{width:44px;height:44px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;flex:none}
+.spk svg{width:22px;height:22px}.spk.w{background:rgba(255,255,255,.18)}
+/* home header */
+.head{background:var(--g);padding:20px 20px 84px;border-radius:0 0 30px 30px;color:#fff}
+.hello{font-size:20px;opacity:.92}.hello b{font-size:22px}
+.date{font-size:13px;opacity:.75;margin-top:2px}
+.avatar{width:46px;height:46px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}
+.chip{height:40px;padding:0 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.7);color:#fff;font-weight:700;font-size:14px}
+.search{margin-top:16px;height:52px;background:var(--g2);border-radius:16px;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;gap:10px;padding:0 14px;width:100%;color:rgba(255,255,255,.85);font-size:15px;text-align:start}
+/* weather card */
+.wx{margin:-62px 18px 0;background:#fff;border-radius:22px;box-shadow:var(--sh);padding:16px 18px;position:relative}
+.loc{display:flex;align-items:center;gap:6px;font-weight:700;font-size:15px}
+.loc svg{width:16px;height:16px;color:var(--g)}
+.temp{font-size:44px;font-weight:800;line-height:1;display:flex;align-items:flex-start;gap:6px}
+.temp small{font-size:14px;font-weight:600;color:var(--mut);line-height:1.5;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:14px 0 10px;text-align:start}
+.stats div{font-size:12px;color:var(--mut)}.stats b{display:block;font-size:14px;color:var(--ink)}
+.sun{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut)}.sun b{color:var(--ink);display:block;font-size:14px}
+.sun svg{flex:1;height:34px}
+.wx .spk{width:36px;height:36px;margin-inline-start:auto}.wx .spk svg{width:18px;height:18px}
+/* sections */
+.sec{padding:22px 18px 0}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sh h3{margin:0;font-size:18px;font-weight:800}.sh button{color:var(--g);font-weight:700;font-size:14px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cat{background:#fff;border-radius:16px;box-shadow:var(--sh);padding:12px 4px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:14px;font-weight:700;text-align:center}
+.cat i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-style:normal}
+.cat svg{width:24px;height:24px}
+.hs{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory}
+.ph{flex:none;width:158px;height:132px;border-radius:16px;overflow:hidden;position:relative;scroll-snap-align:start;box-shadow:var(--sh)}
+.ph svg.art{width:100%;height:100%}
+.ph span{position:absolute;inset-inline:0;bottom:0;padding:18px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-weight:700;font-size:15px;text-align:start}
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 6px;font-size:18px;font-weight:700}
+.rb{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--g)}
+.rb svg{width:20px;height:20px}
+/* crop detail */
+.hero{display:grid;place-items:center;height:230px;position:relative;margin:0 18px}
+.hero svg.art{width:220px;height:200px;border-radius:24px;box-shadow:var(--sh)}
+.thumbs{display:flex;justify-content:center;gap:8px;margin:6px 0 12px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 18px 4px}.fc{flex:none;height:36px;padding:0 14px;border-radius:18px;background:#fff;border:1px solid var(--line);font-weight:700;font-size:14px}.fc.on{background:var(--g);color:#fff;border-color:var(--g)}
+.thumbs button{display:block}.thumbs svg{width:44px;height:44px;border-radius:10px;border:2px solid transparent}.thumbs svg.on{border-color:var(--g)}
+.dc{background:#fff;border-radius:22px 22px 0 0;box-shadow:var(--sh);padding:18px;margin:0 0 0}
+.dc h2{margin:0;font-size:22px}.ok{color:var(--g);font-weight:700;font-size:14px;display:flex;align-items:center;gap:4px}
+.pct{font-size:22px;font-weight:800;color:var(--g)}
+.step{display:flex;align-items:center;gap:10px;font-weight:700}
+.step button{width:28px;height:28px;border-radius:50%;background:var(--g);color:#fff;font-size:18px;line-height:1;display:grid;place-items:center}
+.dc h4{margin:14px 0 4px;font-size:16px}.dc p{margin:0;color:var(--mut);font-size:15px}
+.rel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.rel svg{width:100%;height:auto;aspect-ratio:1;border-radius:12px}
+.btn{width:100%;height:54px;border-radius:27px;background:var(--g);color:#fff;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+.btn svg{width:20px;height:20px}
+/* season notes */
+.gc{margin:10px 18px 0;background:var(--g);color:#fff;border-radius:22px;padding:18px;display:flex;justify-content:space-between;align-items:center}
+.gc small{opacity:.8;font-size:13px}.gc .big{font-size:40px;font-weight:800;line-height:1.1}
+.nc{margin:14px 18px 0;background:#fff;border-radius:22px;box-shadow:var(--sh);padding:16px}
+.nr{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.nr:first-of-type{border-top:0}
+.nr svg{width:58px;height:58px;border-radius:12px;flex:none}
+.nr b{font-size:14px}.nr div{font-size:13px;color:var(--mut)}
+.tag{display:inline-flex;gap:4px;align-items:center;font-weight:700;font-size:13px}
+.tag.ok{color:var(--g)}.tag.no{color:#B4531A}
+/* settings */
+.set{padding:8px 18px 24px}
+.set .card{background:#fff;border-radius:20px;box-shadow:var(--sh);padding:16px;margin-top:12px}
+.set h4{margin:0 0 4px;font-size:17px}
+.link{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:start}
+.lab{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:15px}.lab svg{width:20px;height:20px;color:var(--g)}
+input[type=range]{width:100%;accent-color:var(--g);height:36px}
+/* nav */
+nav{position:sticky;bottom:0;margin-top:-84px;height:70px;background:#fff;display:flex;box-shadow:0 -4px 14px rgba(12,90,59,.1);z-index:5;border-radius:20px 20px 0 0}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--mut)}
+nav button.on{color:var(--g);font-weight:800}nav svg{width:24px;height:24px}
+nav button.on svg{fill:var(--g);fill-opacity:.18}
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:20;display:flex;align-items:flex-end}
+.sheet{background:#fff;width:100%;border-radius:24px 24px 0 0;padding:20px 20px 28px}
+.sheet h3{margin:0 0 8px;font-size:20px}
+.opt{display:flex;justify-content:space-between;align-items:center;width:100%;padding:16px 4px;font-size:20px;font-weight:600;text-align:start;border-top:1px solid var(--line)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--g);color:#fff;padding:12px 20px;border-radius:16px;z-index:30;max-width:360px;width:calc(100% - 40px);text-align:center;box-shadow:var(--sh)}
+.note{font-size:12px;color:var(--mut);text-align:center;padding:14px 24px 0}
+</style>
+<div id="app"></div>
+<script>
+const N=(ar,en,fr)=>({ar,en,fr});
+const T={
+greet_morning:N('صباح الخير','Good Morning','Bonjour'),greet_afternoon:N('نهارك سعيد','Good Afternoon','Bon après-midi'),greet_evening:N('مساء الخير','Good Evening','Bonsoir'),
+place:N('مكناس · سايس','Meknès · Saïs','Meknès · Saïs'),ask:N('قول ليا شنو بغيتي','Tell me what you need','Dites-moi ce qu’il vous faut'),
+hum:N('الرطوبة','Humidity','Humidité'),rain:N('الشتا','Rain','Pluie'),wind:N('الريح','Wind','Vent'),pressure:N('الضغط','Pressure','Pression'),sunrise:N('الشروق','Sunrise','Lever'),sunset:N('الغروب','Sunset','Coucher'),
+know:N('شنو بغيتي تعرف؟','What do you want to know?','Que voulez-vous savoir ?'),
+d_crop:N('شنو نزرع','Crop','Culture'),d_water:N('الما','Water','Eau'),d_timing:N('فاش نزرع','Timing','Moment'),d_risk:N('الخطر','Risk','Risque'),
+best:N('أحسن الزراعات ليك','Best crops for you','Meilleures cultures'),all:N('شوف الكل','View all','Tout voir'),
+nav_home:N('الرئيسية','Home','Accueil'),nav_farm:N('الزراعات','Crops','Cultures'),nav_results:N('النتايج','Results','Résultats'),nav_me:N('أنا','Me','Moi'),
+crop_details:N('تفاصيل الزراعة','Crop details','Détails de la culture'),chance:N('حظ النجاح','Chance of a good season','Chance de bonne saison'),
+area:N('المساحة (هكتار)','Area (ha)','Surface (ha)'),desc:N('الوصف','Description','Description'),related:N('زراعات أخرى','Other crops','Autres cultures'),
+see3:N('شوف 3 مستقبلات','See 3 parallel futures','Voir 3 futurs parallèles'),
+season_rain:N('شتا الموسم','Season rain','Pluie de la saison'),so_far:N('من بداية الموسم','Since the season started','Depuis le début de saison'),
+past:N('المواسم اللي فاتو','Past seasons','Saisons passées'),good:N('موسم مزيان','Good season','Bonne saison'),dry:N('موسم ناشف','Dry season','Saison sèche'),
+why:N('علاش هاد النصيحة؟','Why this advice?','Pourquoi ce conseil ?'),
+settings:N('الإعدادات','Settings','Réglages'),language:N('اللغة','Language','Langue'),volume:N('حجم الصوت','Volume','Volume'),speed:N('سرعة الصوت','Voice speed','Vitesse de la voix'),
+voice:N('الصوت','Voice','Voix'),voice_male:N('صوت راجل','Male voice','Voix masculine'),about:N('على التطبيق','About','À propos'),
+source:N('المعطيات من ناسا (NASA POWER). هادي محاكاة مبنية على شتا السنين اللي فاتو، ماشي ضمانة.','Data from NASA POWER. A simulation based on past rainfall, not a guarantee.','Données NASA POWER. Simulation fondée sur la pluie passée, pas une garantie.'),
+voice_soon:N('الصوت غادي يخدم فالمرحلة الجاية.','Voice will work in the next step.','La voix fonctionnera à l’étape suivante.'),
+soon:N('هاد الجزء جاي فالمرحلة الجاية.','This part comes in the next step.','Cette partie arrive à l’étape suivante.'),
+change_language:N('بدل اللغة','Change language','Changer de langue'),
+sample:N('الأرقام ديال المثال، النهار اللي كيجيو معطيات ناسا غادي يتبدلو.','Sample numbers for now. Real NASA data replaces them in the next step.','Chiffres d’exemple. Les vraies données NASA les remplaceront à l’étape suivante.'),
+wheat:N('القمح','Wheat','Blé'),barley:N('الشعير','Barley','Orge'),fava:N('الفول','Fava beans','Fèves'),lentil:N('العدس','Lentils','Lentilles'),onion:N('البصلة','Onion','Oignon'),potato:N('البطاطا','Potato','Pomme de terre'),
+d_wheat:N('زراعة الحبوب الرئيسية فسايس. كتحتاج ما بزاف فالشتا، والحصاد فالصيف.','Main cereal of the Saïs. Needs steady winter rain; harvested in early summer.','Céréale principale du Saïs. Demande une pluie d’hiver régulière ; récolte en début d’été.'),
+d_barley:N('كتقاوم الناشف أحسن من القمح.','Handles dry spells better than wheat.','Résiste mieux à la sécheresse que le blé.'),
+d_fava:N('بقولية كتجدد التربة وكتخلي الزراعة الجاية أحسن.','A legume: it restores the soil for the next crop.','Une légumineuse : elle enrichit le sol pour la culture suivante.'),
+d_lentil:N('بقولية خفيفة على الما.','A light-water legume.','Une légumineuse peu gourmande en eau.'),
+d_onion:N('كتحتاج ما كثر، ولازم السقي.','Needs more water; irrigation required.','Demande plus d’eau ; irrigation nécessaire.'),
+d_potato:N('كتحتاج ما بزاف وبرودة معتدلة.','Needs a lot of water and mild cold.','Demande beaucoup d’eau et un froid modéré.')};
+Object.assign(T,{softwheat:N('القمح اللين','Soft wheat','Blé tendre'),
+durumwheat:N('القمح الصلب','Durum wheat','Blé dur'),
+oats:N('الخرطال','Oats','Avoine'),
+maize:N('الذرة','Maize','Maïs'),
+sorghum:N('الذرة الرفيعة','Sorghum','Sorgho'),
+chickpea:N('الحمص','Chickpea','Pois chiche'),
+pea:N('الجلبانة','Peas','Petits pois'),
+garlic:N('التوم','Garlic','Ail'),
+carrot:N('الخيزو','Carrot','Carotte'),
+tomato:N('الماطيشة','Tomato','Tomate'),
+pepper:N('الفلفلة','Pepper','Poivron'),
+courgette:N('القرعة','Courgette','Courgette'),
+cabbage:N('الكرنب','Cabbage','Chou'),
+watermelon:N('الدلاح','Watermelon','Pastèque'),
+melon:N('الشمام','Melon','Melon'),
+sunflower:N('عباد الشمس','Sunflower','Tournesol'),
+rapeseed:N('الكولزا','Rapeseed','Colza'),
+sugarbeet:N('الشمندر السكري','Sugar beet','Betterave sucrière'),
+alfalfa:N('الفصة','Alfalfa','Luzerne'),
+olive:N('الزيتون','Olive','Olivier'),
+almond:N('اللوز','Almond','Amandier'),
+grape:N('العنب','Grape','Vigne'),
+fig:N('الكرموس','Fig','Figuier'),
+citrus:N('الحوامض','Citrus','Agrumes'),
+apple:N('التفاح','Apple','Pommier'),
+pomegranate:N('الرمان','Pomegranate','Grenadier'),
+plum:N('البرقوق','Plum','Prunier'),
+c_all:N('الكل','All','Tout'),
+c_cereal:N('الحبوب','Cereals','Céréales'),
+c_legume:N('القطاني','Legumes','Légumineuses'),
+c_veg:N('الخضرة والفواكه','Vegetables','Légumes'),
+c_industrial:N('صناعية وعلف','Industrial & fodder','Industrielles et fourrage'),
+c_tree:N('الأشجار','Trees','Arbres'),
+cd_cereal:N('حبوب كتعتامد على شتا الشتا، والحصاد فالصيف.','A cereal that relies on winter rain; harvested in early summer.','Une céréale qui dépend de la pluie d’hiver ; récolte en début d’été.'),
+cd_legume:N('بقولية كتجدد التربة وكتخلي الزراعة الجاية أحسن.','A legume: it restores the soil for the next crop.','Une légumineuse : elle enrichit le sol pour la culture suivante.'),
+cd_veg:N('كتحتاج الما بزاف، السقي ضروري.','Needs plenty of water; irrigation is required.','Demande beaucoup d’eau ; irrigation nécessaire.'),
+cd_industrial:N('زراعة صناعية أو علف للبهايم، كتحتاج حساب ديال الما.','An industrial or fodder crop; water planning matters.','Culture industrielle ou fourragère ; la gestion de l’eau est essentielle.'),
+cd_tree:N('شجرة كتبقى سنين. السقي والما ديال الفرشة مهمين.','A perennial tree. Irrigation and groundwater matter.','Un arbre pérenne. L’irrigation et la nappe sont déterminantes.'),
+perennial:N('شجرة دايمة','Perennial','Pérenne'),notmodel:N('الأشجار ما دخلاتش فالحساب ديال 3 مواسم.','Trees are not part of the 3-season model.','Les arbres ne sont pas dans le modèle à 3 saisons.'),
+});
+const LANGS=[['ar','الدارجة'],['en','English'],['fr','Français']];
+const CROPS=[["softwheat", "#EBC45A", "#C98A1C", 78, "cereal", "cereal"], ["durumwheat", "#E6B94E", "#B8791A", 74, "cereal", "cereal"], ["barley", "#D9C26A", "#9E8A2F", 71, "cereal", "cereal"], ["oats", "#D8D58A", "#8C8A3A", 66, "cereal", "cereal"], ["maize", "#E9D86A", "#D9A71C", 41, "corn", "cereal"], ["sorghum", "#D9A27A", "#A8562A", 47, "corn", "cereal"], ["fava", "#8FC26A", "#3F7F2E", 69, "bean", "legume"], ["chickpea", "#E0C48A", "#B68A3C", 62, "bean", "legume"], ["lentil", "#D39A6A", "#8E4A22", 58, "bean", "legume"], ["pea", "#9FD27A", "#4C9A34", 60, "bean", "legume"], ["onion", "#E3B2C7", "#9A4F73", 44, "root", "veg"], ["garlic", "#E8DCC8", "#B9A27C", 46, "root", "veg"], ["potato", "#D9B987", "#7A5A2B", 39, "root", "veg"], ["carrot", "#F1C79A", "#E0762B", 43, "root", "veg"], ["tomato", "#F2B8A8", "#D8402B", 36, "fruitveg", "veg"], ["pepper", "#F1D49A", "#D8402B", 35, "fruitveg", "veg"], ["courgette", "#BFE0A0", "#3F8A2E", 40, "fruitveg", "veg"], ["cabbage", "#CDE6C4", "#5FA24A", 42, "leaf", "veg"], ["watermelon", "#BEE3A8", "#2F8A3E", 33, "melon", "veg"], ["melon", "#F4E3A0", "#E2A92B", 34, "melon", "veg"], ["sunflower", "#F6E39A", "#F0B400", 48, "sun", "industrial"], ["rapeseed", "#EEF0A0", "#E7C700", 52, "sun", "industrial"], ["sugarbeet", "#E9C7D2", "#8A3A5B", 37, "root", "industrial"], ["alfalfa", "#C4E6A8", "#4C9A34", 64, "forage", "industrial"], ["olive", "#DCE7C8", "#6B7F2E", null, "tree", "tree"], ["almond", "#F4E6E8", "#C9A07A", null, "tree", "tree"], ["grape", "#E5D3EE", "#6B3F86", null, "vine", "tree"], ["fig", "#E8E0EE", "#6A3F5B", null, "tree", "tree"], ["citrus", "#FBE6B8", "#F28C1B", null, "tree", "tree"], ["apple", "#F6D5D0", "#D8402B", null, "tree", "tree"], ["pomegranate", "#F3C7C4", "#B52A2A", null, "tree", "tree"], ["plum", "#E3D0EC", "#7A3F9A", null, "tree", "tree"]];
+const CATS=["all","cereal","legume","veg","industrial","tree"];
+const SEASONS=[['2023–24','310 mm',1,'#E8B84A'],['2022–23','186 mm',0,'#C9A56B'],['2021–22','298 mm',1,'#7DB35B'],['2020–21','341 mm',1,'#D9C26A']];
+function art(kind,c1,c2,w){let s='';
+ const leaf='#4C9A34';
+ if(kind==='wheat'||kind==='barley'||kind==='cereal'){for(let i=0;i<9;i++){const x=12+i*11;s+=`<path d="M${x} 100V46" stroke="${c2}" stroke-width="2"/>`;for(let j=0;j<4;j++)s+=`<ellipse cx="${x-3}" cy="${44+j*7}" rx="2.6" ry="5" fill="${c2}" transform="rotate(-25 ${x-3} ${44+j*7})"/><ellipse cx="${x+3}" cy="${47+j*7}" rx="2.6" ry="5" fill="${c2}" transform="rotate(25 ${x+3} ${47+j*7})"/>`}}
+ else if(kind==='corn'){for(let i=0;i<4;i++){const x=16+i*27;s+=`<path d="M${x} 100V30" stroke="#4C9A34" stroke-width="4"/><path d="M${x} 70Q${x-18} 60 ${x-24} 44M${x} 56Q${x+18} 46 ${x+24} 30" stroke="#4C9A34" stroke-width="3" fill="none"/><ellipse cx="${x+5}" cy="62" rx="5" ry="12" fill="${c2}"/>`}}
+ else if(kind==='bean'){for(let i=0;i<5;i++){const x=16+i*20;s+=`<path d="M${x} 100V50" stroke="${c2}" stroke-width="3"/><ellipse cx="${x-7}" cy="62" rx="8" ry="4.5" fill="${c2}" transform="rotate(-30 ${x-7} 62)"/><ellipse cx="${x+7}" cy="74" rx="8" ry="4.5" fill="${c2}" transform="rotate(30 ${x+7} 74)"/><ellipse cx="${x-6}" cy="86" rx="7" ry="4" fill="${c2}" transform="rotate(-30 ${x-6} 86)"/>`}}
+ else if(kind==='root'){for(let i=0;i<4;i++){const x=18+i*26;s+=`<path d="M${x} 78V48M${x-6} 78L${x-12} 54M${x+6} 78L${x+12} 54" stroke="${leaf}" stroke-width="3" stroke-linecap="round"/><circle cx="${x}" cy="86" r="12" fill="${c2}"/>`}}
+ else if(kind==='fruitveg'){for(let i=0;i<3;i++){const x=22+i*38;s+=`<path d="M${x} 100V36" stroke="${leaf}" stroke-width="3"/><path d="M${x} 50Q${x-16} 44 ${x-18} 34M${x} 66Q${x+16} 60 ${x+18} 50" stroke="${leaf}" stroke-width="3" fill="none"/><circle cx="${x-9}" cy="72" r="8" fill="${c2}"/><circle cx="${x+9}" cy="84" r="8" fill="${c2}"/>`}}
+ else if(kind==='leaf'){for(let i=0;i<3;i++){const x=24+i*36;s+=`<circle cx="${x}" cy="76" r="17" fill="${c2}"/><circle cx="${x}" cy="76" r="11" fill="#fff" opacity=".25"/><path d="M${x-14} 80Q${x} 60 ${x+14} 80" stroke="#fff" stroke-width="2" fill="none" opacity=".6"/>`}}
+ else if(kind==='melon'){const xs=[28,70,98],ys=[78,88,72],rs=[18,14,12];for(let i=0;i<3;i++)s+=`<circle cx="${xs[i]}" cy="${ys[i]}" r="${rs[i]}" fill="${c2}"/><path d="M${xs[i]-rs[i]+4} ${ys[i]}Q${xs[i]} ${ys[i]-rs[i]} ${xs[i]+rs[i]-4} ${ys[i]}" stroke="#fff" stroke-width="2" fill="none" opacity=".5"/>`}
+ else if(kind==='sun'){for(let i=0;i<3;i++){const x=22+i*38,y=44+(i%2)*10;s+=`<path d="M${x} 100V${y}" stroke="${leaf}" stroke-width="3"/>`;for(let k=0;k<10;k++)s+=`<ellipse cx="${x}" cy="${y-12}" rx="3" ry="8" fill="${c2}" transform="rotate(${k*36} ${x} ${y})"/>`;s+=`<circle cx="${x}" cy="${y}" r="7" fill="#6B3F1A"/>`}}
+ else if(kind==='forage'){for(let i=0;i<16;i++){const x=6+i*7;s+=`<path d="M${x} 100Q${x+(i%3-1)*5} 70 ${x+(i%4-2)*3} ${52+(i%5)*5}" stroke="${c2}" stroke-width="3" fill="none" stroke-linecap="round"/>`}}
+ else if(kind==='tree'||kind==='vine'){const xs=kind==='vine'?[30,90]:[60];for(const x of xs){s+=`<rect x="${x-4}" y="64" width="8" height="36" fill="#7A5A2B"/><circle cx="${x}" cy="48" r="${kind==='vine'?20:28}" fill="#5FA24A"/><circle cx="${x-10}" cy="54" r="${kind==='vine'?14:20}" fill="#4C9A34"/>`;for(let k=0;k<7;k++)s+=`<circle cx="${x+(k*13%27)-13}" cy="${40+(k*17%30)}" r="3.6" fill="${c2}"/>`}}
+ return `<svg class="art" viewBox="0 0 120 100" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g${w}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3EC"/><stop offset="1" stop-color="${c1}"/></linearGradient></defs><rect width="120" height="100" fill="url(#g${w})"/><path d="M0 88Q30 80 60 86T120 82V100H0z" fill="${c2}" opacity=".3"/>${s}</svg>`}
+let aid=0;const crop=(c,w)=>art(c[4],c[1],c[2],(w||'')+c[0]+(aid++));
+const chanceTag=c=>c[3]===null?t('perennial'):c[3]+'%';
+const I={
+spk:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>',
+mic:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-3.1A7 7 0 0 0 19 11h-2z"/></svg>',
+search:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+user:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0C5A3B" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+logo:'<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0C5A3B" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>',
+pin:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>',
+cloud:'<svg width="64" height="52" viewBox="0 0 64 52"><circle cx="40" cy="18" r="11" fill="#FDB441"/><g stroke="#FDB441" stroke-width="2.5" stroke-linecap="round"><path d="M40 1v4M54 6l-3 3M58 18h-4M26 6l3 3"/></g><path d="M16 46a10 10 0 0 1-1-20 13 13 0 0 1 25 3 8.5 8.5 0 0 1 2 17z" fill="#fff" stroke="#9DB6C7" stroke-width="2"/></svg>',
+arc:'<svg viewBox="0 0 120 34" preserveAspectRatio="none"><path d="M2 32Q60 -22 118 32" fill="none" stroke="#C9D6CE" stroke-width="2" stroke-dasharray="3 4"/><circle cx="76" cy="9" r="5" fill="#FDB441"/></svg>',
+crop:'<svg viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"><path d="M12 21V9M12 13c-4 0-6-2-6-6 4 0 6 2 6 6zM12 11c4 0 6-2 6-6-4 0-6 2-6 6z"/></svg>',
+water:'<svg viewBox="0 0 24 24" fill="none" stroke="#2F7FB5" stroke-width="2" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>',
+time:'<svg viewBox="0 0 24 24" fill="none" stroke="#C98A1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4M9 15l2 2 4-4"/></svg>',
+risk:'<svg viewBox="0 0 24 24" fill="none" stroke="#B4531A" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>',
+home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>',
+farm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M12 13c-4 0-6-2-6-6 4 0 6 2 6 6zM12 11c4 0 6-2 6-6-4 0-6 2-6 6z"/></svg>',
+res:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>',
+me:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+vol:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>',
+spd:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18a8 8 0 1 1 16 0M12 18l4-6"/></svg>',
+chk:'<svg width="26" height="26" viewBox="0 0 24 24" fill="#0C5A3B"><circle cx="12" cy="12" r="10"/><path d="M7 12l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+chev:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>',
+back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
+okc:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M7 12l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+warn:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22z"/><path d="M12 9v5M12 17v1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>',
+plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'};
+const st={lang:null,tab:0,view:null,sheet:false,vol:.8,spd:1,toast:null,ha:1,cat:'all'};
+const t=k=>(T[k]&&T[k][st.lang||'en'])||k;
+const $=document.getElementById('app');
+function toast(k){st.toast=t(k);render();clearTimeout(toast.h);toast.h=setTimeout(()=>{st.toast=null;render()},2200)}
+const greet=()=>{const h=new Date().getHours();return t(h<12?'greet_morning':h<18?'greet_afternoon':'greet_evening')};
+const dateStr=()=>new Date().toLocaleDateString({ar:'ar-MA-u-nu-latn',en:'en-GB',fr:'fr-FR'}[st.lang]||'en-GB',{weekday:'long',day:'2-digit',month:'short',year:'numeric'});
+const spk=c=>`<span class="spk ${c||''}" role="button" tabindex="0" aria-label="Listen" data-act="voice">${I.spk}</span>`;
+function langScreen(){return `<div class="lang"><div class="logo">${I.logo}SAMA</div><h1>اختار اللغة ديالك</h1><p>Choose your language</p><p>Choisissez votre langue</p><div class="sp"></div>
+${LANGS.map(l=>`<button class="lbtn" data-lang="${l[0]}"><span>${l[1]}</span>${spk()}</button>`).join('')}</div>`}
+function home(){return `<div class="head"><div class="row"><div class="grow"><div class="hello">${greet().replace(/(\S+)$/,'<b>$1</b>')}</div><div class="date">${dateStr()}</div></div>
+<button class="chip" data-act="sheet" aria-label="${t('change_language')}">${LANGS.find(l=>l[0]===st.lang)[1]}</button><div class="avatar">${I.user}</div></div>
+<button class="search" data-act="toast">${I.search}<span class="grow">${t('ask')}</span>${I.mic}</button></div>
+<div class="wx"><div class="row"><div class="loc">${I.pin}${t('place')}</div>${spk()}</div>
+<div class="row" style="justify-content:space-between;margin-top:6px"><div class="temp">+17<small>°C<br>H:23° L:9°</small></div>${I.cloud}</div>
+<div class="stats"><div>${t('hum')}<b>62%</b></div><div>${t('rain')}<b>142 mm</b></div><div>${t('wind')}<b>12 km/h</b></div><div>${t('pressure')}<b>1016 hPa</b></div></div>
+<div class="sun"><div>${t('sunrise')}<b>07:18</b></div>${I.arc}<div>${t('sunset')}<b>17:49</b></div></div></div>
+<div class="sec"><div class="sh"><h3>${t('know')}</h3></div><div class="cats">
+${[['crop','d_crop','#E5F3EA'],['water','d_water','#E3EEF8'],['time','d_timing','#FBF0D9'],['risk','d_risk','#F8E7DC']].map(a=>`<button class="cat" data-go="0"><i style="background:${a[2]}">${I[a[0]]}</i>${t(a[1])}</button>`).join('')}</div></div>
+<div class="sec"><div class="sh"><h3>${t('best')}</h3><button data-tab="1">${t('all')}</button></div><div class="hs">
+${CROPS.map((c,i)=>[c,i]).filter(x=>x[0][3]!==null).sort((a,b)=>b[0][3]-a[0][3]).slice(0,6).map(([c,i])=>`<button class="ph" data-crop="${i}">${crop(c,'h')}<span>${t(c[0])}</span></button>`).join('')}</div></div>
+<div class="note">${t('sample')}</div>`}
+function cropsTab(){const list=CROPS.map((c,i)=>[c,i]).filter(x=>st.cat==='all'||x[0][5]===st.cat);
+return `<div class="bar"><span></span><span>${t('nav_farm')}</span><span></span></div>
+<div class="chips">${CATS.map(k=>`<button class="fc ${st.cat===k?'on':''}" data-cat="${k}">${t('c_'+k)}</button>`).join('')}</div>
+<div class="sec" style="padding-top:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+${list.map(([c,i])=>`<button class="ph" style="width:100%;height:140px" data-crop="${i}">${crop(c,'l')}<span>${t(c[0])} · ${chanceTag(c)}</span></button>`).join('')}</div></div><div class="note">${t('sample')}</div>`}
+function detail(){const c=CROPS[st.view];const same=CROPS.map((x,i)=>[x,i]).filter(x=>x[0][5]===c[5]);
+return `<div class="bar"><button class="rb" data-act="back" aria-label="Back">${I.back}</button><span>${t('crop_details')}</span><button class="rb" data-act="voice" aria-label="Listen">${I.vol}</button></div>
+<div class="hero">${crop(c,'d')}</div>
+<div class="thumbs">${same.slice(0,5).map(([x,i])=>`<button data-crop="${i}">${crop(x,'t').replace('class="art"','class="art'+(i===st.view?' on':'')+'"')}</button>`).join('')}</div>
+<div class="dc"><div class="row"><div class="grow"><h2>${t(c[0])}</h2><div class="ok">${c[3]===null?t('perennial'):I.okc+t('chance')}</div></div><div class="pct">${c[3]===null?'':c[3]+'%'}</div></div>
+<div class="row" style="justify-content:space-between;margin-top:12px"><span style="color:var(--mut);font-size:14px">${t('area')}</span><div class="step"><button data-act="minus" aria-label="-">−</button>${st.ha}<button data-act="plus" aria-label="+">+</button></div></div>
+<h4>${t('desc')}</h4><p>${t('cd_'+c[5])}${c[3]===null?' '+t('notmodel'):''}</p>
+<h4>${t('related')}</h4><div class="rel">${CROPS.map((x,i)=>[x,i]).filter(x=>x[1]!==st.view&&x[0][5]===c[5]).slice(0,4).map(([x,i])=>`<button data-crop="${i}">${crop(x,'r')}</button>`).join('')}</div>
+<button class="btn" data-act="toast2">${t('see3')}</button></div>`}
+function results(){return `<div class="bar"><span></span><span>${t('season_rain')}</span><span></span></div>
+<div class="gc"><div><small>${t('so_far')}</small><div class="big">142 mm</div><small>${t('place')}</small></div>${I.cloud}</div>
+<div class="nc"><div class="sh"><h3>${t('past')}</h3></div>${SEASONS.map((s,i)=>`<div class="nr">${art('wheat','#EAF3EC',s[3],'n'+i)}<div><b>${s[0]} · ${s[1]}</b><div><span class="tag ${s[2]?'ok':'no'}">${s[2]?I.okc+t('good'):I.warn+t('dry')}</span></div></div></div>`).join('')}
+<button class="btn" data-act="toast2">${I.plus}${t('why')}</button></div><div class="note">${t('sample')}</div>`}
+function settings(){const l=LANGS.find(x=>x[0]===st.lang)[1];return `<div class="bar"><span></span><span>${t('settings')}</span><span></span></div><div class="set">
+<div class="card"><button class="link" data-act="sheet"><span><h4>${t('language')}</h4><span>${l}</span></span>${I.chev}</button></div>
+<div class="card"><h4>${t('voice')}</h4><div>${t('voice_male')}</div>
+<div class="lab">${I.vol}${t('volume')}</div><input type="range" min="0" max="1" step=".1" value="${st.vol}" data-r="vol" aria-label="${t('volume')}">
+<div class="lab">${I.spd}${t('speed')}</div><input type="range" min=".7" max="1.3" step=".1" value="${st.spd}" data-r="spd" aria-label="${t('speed')}"></div>
+<div class="card"><h4>${t('about')}</h4><div>${t('source')}</div></div></div>`}
+function render(){
+ $.dir=st.lang==='ar'?'rtl':'ltr';
+ if(!st.lang){$.dir='ltr';$.innerHTML=langScreen();return bind()}
+ const body=st.view!==null?detail():[home,cropsTab,results,settings][st.tab]();
+ const nav=[['home','nav_home'],['farm','nav_farm'],['res','nav_results'],['me','nav_me']];
+ $.innerHTML=`<div class="screen">${body}</div><nav>${nav.map((n,i)=>`<button data-tab="${i}" class="${st.tab===i&&st.view===null?'on':''}">${I[n[0]]}${t(n[1])}</button>`).join('')}</nav>
+ ${st.sheet?`<div class="scrim" data-act="close"><div class="sheet"><h3>${t('change_language')}</h3>${LANGS.map(l=>`<button class="opt" data-lang="${l[0]}">${l[1]}${st.lang===l[0]?I.chk:''}</button>`).join('')}</div></div>`:''}`;
+ bind()}
+function bind(){
+ if(st.toast){const d=document.createElement('div');d.className='toast';d.textContent=st.toast;$.appendChild(d)}
+ $.querySelectorAll('[data-lang]').forEach(b=>b.onclick=e=>{if(e.target.closest('[data-act=voice]'))return;st.lang=b.dataset.lang;st.sheet=false;render()});
+ $.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{st.tab=+b.dataset.tab;st.view=null;render()});
+ $.querySelectorAll('[data-crop]').forEach(b=>b.onclick=()=>{st.view=+b.dataset.crop;render();$.querySelector('.screen').scrollTop=0});
+ $.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{st.cat=b.dataset.cat;render()});
+ $.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{st.tab=1;st.view=null;render()});
+ $.querySelectorAll('[data-act]').forEach(b=>b.onclick=e=>{const a=b.dataset.act;
+  if(a==='close'){if(e.target===b){st.sheet=false;render()}}
+  else if(a==='sheet'){st.sheet=true;render()}
+  else if(a==='voice'){e.stopPropagation();toast('voice_soon')}
+  else if(a==='toast')toast('voice_soon');
+  else if(a==='toast2')toast('soon');
+  else if(a==='back'){st.view=null;render()}
+  else if(a==='plus'){st.ha=Math.min(50,st.ha+1);render()}
+  else if(a==='minus'){st.ha=Math.max(1,st.ha-1);render()}});
+ $.querySelectorAll('[data-r]').forEach(r=>r.oninput=()=>{st[r.dataset.r]=+r.value});
+ $.querySelectorAll('.spk').forEach(s=>s.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();toast('voice_soon')}})}
+render();
+</script>
