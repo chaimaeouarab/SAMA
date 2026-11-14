@@ -5,6 +5,9 @@ enum Intent {
   water,
   timing,
   risk,
+  lessRain,
+  rotation,
+  explain,
   chooseField,
   repeat,
   changeLanguage,
@@ -21,7 +24,8 @@ class IntentMatch {
   bool get confident => intent != null && confidence >= confidenceThreshold;
 }
 
-/// Closed-vocabulary matcher. No LLM: normalise, then fuzzy-match against keywords.
+/// Closed-vocabulary matcher. No LLM: normalise, then fuzzy-match against keywords in 4 languages
+/// (Darija in Arabic script and Arabizi, Modern Standard Arabic, English, French).
 class IntentMatcher {
   IntentMatcher(this.catalog) {
     for (final c in catalog.crops) {
@@ -34,78 +38,133 @@ class IntentMatcher {
   final CropCatalog catalog;
   final List<(String, List<String>)> _cropNames = [];
 
-  // Darija (Arabic + Arabizi), English, French keywords per intent.
+  // All keywords are native-review drafts (docs/VOICE_TESTS.md).
   static const keywords = <Intent, List<String>>{
     Intent.cropAdvice: [
+      // Darija
       'شنو نزرع',
       'اش نزرع',
       'شنو نغرس',
-      'الزراعة',
-      'زراعة',
       'chno nzra3',
       'ach nzra3',
+      'chno nghers',
+      // MSA
+      'ماذا أزرع', 'ما المحصول المناسب', 'ماذا يمكنني أن أزرع',
+      // English / French
       'which crop',
       'what to plant',
       'what should i plant',
-      'crop',
       'quelle culture',
       'que planter',
-      'culture',
+      'que dois je planter',
     ],
     Intent.water: [
       'شحال ديال الما',
-      'الما',
-      'السقي',
+      'واش كتحتاج بزاف ديال الما',
       'chhal d lma',
-      'lma',
-      'water',
+      'wach katahtaj bzaf d lma',
+      'كم من الماء',
+      'هل يحتاج الكثير من الماء',
+      'كم يحتاج من الماء',
       'how much water',
-      'irrigation',
-      'eau',
+      'does it need a lot of water',
+      'water need',
       'combien d eau',
-      'arrosage',
+      'besoin en eau',
+      'a t il besoin de beaucoup d eau',
     ],
     Intent.timing: [
       'فاش نزرع',
       'وقتاش نزرع',
-      'علاش وقت',
       'fach nzra3',
       'waqtach nzra3',
+      'متى أزرع',
+      'متى موعد الزراعة',
       'when to plant',
-      'when',
-      'timing',
+      'when should i plant',
       'quand semer',
-      'quand',
-      'moment',
+      'quand planter',
     ],
     Intent.risk: [
       'شنو الخطر',
-      'الخطر',
+      'واش فيه خطر',
       'chno lkhatar',
-      'lkhatar',
-      'risk',
+      'wach fih khatar',
+      'ما المخاطر',
+      'هل هناك خطر',
       'what risk',
       'is it risky',
-      'risque',
       'quel risque',
-      'danger',
+      'y a t il un risque',
+    ],
+    Intent.lessRain: [
+      'شنو إلا قلت الشتا',
+      'شنو يوقع إلا قلت الشتا',
+      'ila 9allat chta',
+      'chno ila 9allat chta',
+      'chno ghadi ywa9a3 ila 9allat chta',
+      'ماذا لو قل المطر',
+      'ماذا يحدث إذا قل المطر',
+      'ماذا لو انخفض المطر',
+      'what if there is less rain',
+      'less rain',
+      'what happens if there is less rain',
+      'drought',
+      'et s il pleut moins',
+      'moins de pluie',
+      'que se passe t il s il pleut moins',
+      'secheresse',
+    ],
+    Intent.rotation: [
+      'شنو أحسن تناوب',
+      'أي تناوب أحسن',
+      'chno a7sen tanaoub',
+      'ach a7sen tanaoub',
+      'ما أفضل تناوب',
+      'أي تناوب أنسب',
+      'أي دورة زراعية أنسب',
+      'which rotation is more suitable',
+      'best rotation',
+      'which rotation',
+      'quelle rotation',
+      'quelle rotation est la plus adaptee',
+      'meilleure rotation',
+    ],
+    Intent.explain: [
+      'شرح ليا النتيجة',
+      'علاش هاد النتيجة',
+      'sharah liya nnatija',
+      '3lach had nnatija',
+      'اشرح النتيجة',
+      'لماذا هذه النتيجة',
+      'فسر النتيجة',
+      'explain this result',
+      'explain the result',
+      'why this result',
+      'explique ce resultat',
+      'expliquer le resultat',
+      'pourquoi ce resultat',
     ],
     Intent.chooseField: [
       'بدل الفلاحة',
-      'الفلاحة',
-      'الارض',
+      'الفلاحة ديالي',
       'bddel lfla7a',
+      'غير المزرعة',
+      'غيّر المزرعة',
+      'مزرعتي',
       'change field',
       'my field',
       'change my field',
-      'champ',
       'changer de champ',
       'mon champ',
+      'ma ferme',
     ],
     Intent.repeat: [
       'عاود',
       'عاود ليا',
       '3awd',
+      'أعد',
+      'كرر',
       'repeat',
       'say again',
       'again',
@@ -115,8 +174,9 @@ class IntentMatcher {
     ],
     Intent.changeLanguage: [
       'بدل اللغة',
-      'اللغة',
       'bddel llogha',
+      'غير اللغة',
+      'غيّر اللغة',
       'change language',
       'language',
       'changer de langue',
@@ -124,9 +184,10 @@ class IntentMatcher {
     ],
     Intent.help: [
       'عاوني',
-      'مساعدة',
       'سعفني',
       '3awni',
+      'مساعدة',
+      'ساعدني',
       'help',
       'aide',
       'aidez moi',
@@ -161,6 +222,8 @@ class IntentMatcher {
       '!': ' ',
       ',': ' ',
       '.': ' ',
+      '،': ' ',
+      '؟': ' ',
     };
     latin.forEach((k, v) => t = t.replaceAll(k, v));
     // Arabizi digits only inside Latin words (3 -> ع, 7 -> ح, 9 -> ق).
@@ -230,9 +293,11 @@ class IntentMatcher {
     var best = 0.0;
     for (final e in keywords.entries) {
       for (final k in e.value) {
-        final s = _score(u, _tokens(k));
-        // A longer matched keyword is stronger evidence than a one-word hit.
-        final weight = _tokens(k).length > 1 ? 1.0 : 0.95;
+        final kt = _tokens(k);
+        final s = _score(u, kt);
+        // Longer phrases are stronger evidence; a phrase must also not be much longer than what was said.
+        final coverage = kt.length > u.length ? u.length / kt.length : 1.0;
+        final weight = (kt.length > 1 ? 1.0 : 0.9) * (0.5 + 0.5 * coverage);
         if (s * weight > best) {
           best = s * weight;
           bestIntent = e.key;
@@ -254,9 +319,6 @@ class IntentMatcher {
     if (cropId != null &&
         (bestIntent == null || best < IntentMatch.confidenceThreshold)) {
       return IntentMatch(Intent.cropAdvice, cropBest, cropId: cropId);
-    }
-    if (bestIntent == Intent.cropAdvice && cropId != null) {
-      return IntentMatch(bestIntent, best, cropId: cropId);
     }
     return IntentMatch(bestIntent, best, cropId: cropId);
   }

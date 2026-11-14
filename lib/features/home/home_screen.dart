@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import '../../core/colors.dart';
 import '../../core/constants.dart';
-import '../../data/towns.dart';
 import '../../domain/solar.dart';
 import '../../state/farm_state.dart';
 import '../../state/results_provider.dart';
@@ -24,9 +23,8 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lang = ref.watch(langProvider);
     final t = trOf(ref);
-    final model = ref.watch(fieldModelProvider);
+    final model = ref.watch(modelProvider);
     final farm = ref.watch(farmProvider);
-    final town = townById(farm.townId);
     final now = DateTime.now();
     final h = now.hour;
     final greet = t(
@@ -36,286 +34,282 @@ class HomeScreen extends ConsumerWidget {
           ? 'greet_afternoon'
           : 'greet_evening',
     );
-    final locale = {'ar': 'ar_MA', 'en': 'en_GB', 'fr': 'fr_FR'}[lang.code]!;
+    final locale = {
+      'dar': 'ar_MA',
+      'ar': 'ar_MA',
+      'en': 'en_GB',
+      'fr': 'fr_FR',
+    }[lang.code]!;
     final date = DateFormat('EEEE dd MMM yyyy', locale).format(now);
 
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        Container(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 84),
-          decoration: const BoxDecoration(
-            color: SamaColors.green,
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          greet,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
+        CustomPaint(
+          painter: const _HeaderPainter(extra: 62),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            greet,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
-                        ),
-                        Text(
-                          date,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 13,
-                          ),
-                        ),
-                        Text(
-                          t('my_farm'),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  OutlinedButton(
-                    onPressed: () => showLanguageSheet(context, ref),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white70, width: 1.5),
-                      minimumSize: const Size(56, 44),
-                    ),
-                    child: Semantics(
-                      label: t('change_language'),
-                      child: Text(lang.label),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const CircleAvatar(
-                    radius: 23,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person_outline, color: SamaColors.green),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Semantics(
-                button: true,
-                label: t('ask'),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: () => showVoiceSheet(context),
-                  child: Container(
-                    height: 56,
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: SamaColors.green2,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white24),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.search, color: Colors.white70),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            t('ask'),
+                          Text(
+                            date,
                             style: const TextStyle(
                               color: Colors.white70,
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            t('my_farm'),
+                            style: const TextStyle(
+                              color: Colors.white,
                               fontSize: 16,
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    OutlinedButton(
+                      onPressed: () => showLanguageSheet(context, ref),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.white70,
+                          width: 1.5,
                         ),
-                        const Icon(Icons.mic, color: Colors.white),
-                      ],
+                        minimumSize: const Size(56, 44),
+                      ),
+                      child: Semantics(
+                        label: t('change_language'),
+                        child: Text(lang.label),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const CircleAvatar(
+                      radius: 23,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person_outline,
+                        color: SamaColors.green,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Semantics(
+                  button: true,
+                  label: t('ask'),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () => showVoiceSheet(context),
+                    child: Container(
+                      height: 56,
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      decoration: BoxDecoration(
+                        color: SamaColors.green2,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white24),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search, color: Colors.white70),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              t('ask'),
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          const Icon(Icons.mic, color: Colors.white),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Transform.translate(
-          offset: const Offset(0, -62),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: AsyncBody(
-              value: model,
-              onRetry: () => ref.invalidate(fieldModelProvider),
-              builder: (m) => _WeatherCard(town: town, m: m, now: now),
+              ],
             ),
           ),
         ),
-        Transform.translate(
-          offset: const Offset(0, -50),
-          child: Column(
-            children: [
-              _FieldRow(town: town),
-              _Section(
-                title: t('know'),
-                child: Row(
-                  children: [
-                    for (final a in const [
-                      ('d_crop', Icons.eco_outlined, SamaColors.green, 'crop'),
-                      (
-                        'd_water',
-                        Icons.water_drop_outlined,
-                        SamaColors.water,
-                        'water',
-                      ),
-                      (
-                        'd_timing',
-                        Icons.calendar_month_outlined,
-                        SamaColors.amber,
-                        'timing',
-                      ),
-                      (
-                        'd_risk',
-                        Icons.shield_outlined,
-                        SamaColors.danger,
-                        'risk',
-                      ),
-                    ])
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Semantics(
-                            button: true,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(16),
-                              onTap: () => context.go('/guided/${a.$4}'),
-                              child: Container(
-                                constraints: const BoxConstraints(
-                                  minHeight: 96,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                  horizontal: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16),
-                                  boxShadow: samaCardShadow,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: a.$3.withValues(alpha: 0.12),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Icon(a.$2, color: a.$3),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: AsyncBody(
+            value: model,
+            onRetry: () => ref.invalidate(modelProvider),
+            builder: (m) => _WeatherCard(farm: farm, m: m, now: now),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Column(
+          children: [
+            _FarmRow(farm: farm),
+            _Section(
+              title: t('know'),
+              child: Row(
+                children: [
+                  for (final a in const [
+                    ('d_crop', Icons.eco_outlined, SamaColors.green, 'crop'),
+                    (
+                      'd_water',
+                      Icons.water_drop_outlined,
+                      SamaColors.water,
+                      'water',
+                    ),
+                    (
+                      'd_timing',
+                      Icons.calendar_month_outlined,
+                      SamaColors.amber,
+                      'timing',
+                    ),
+                    (
+                      'd_risk',
+                      Icons.shield_outlined,
+                      SamaColors.danger,
+                      'risk',
+                    ),
+                  ])
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Semantics(
+                          button: true,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(16),
+                            onTap: () => context.go('/guided/${a.$4}'),
+                            child: Container(
+                              constraints: const BoxConstraints(minHeight: 96),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: samaCardShadow,
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: a.$3.withValues(alpha: 0.12),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      t(a.$1),
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                    child: Icon(a.$2, color: a.$3),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    t(a.$1),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
-              _Section(
-                title: t('best'),
-                trailing: TextButton(
-                  onPressed: () => context.go('/crops'),
-                  child: Text(t('all')),
-                ),
-                child: AsyncBody(
-                  value: model,
-                  onRetry: () => ref.invalidate(fieldModelProvider),
-                  builder: (m) => SizedBox(
-                    height: 140,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        for (final c in m.rankedAnnuals.take(6))
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 12),
-                            child: Semantics(
-                              button: true,
-                              label: c.name(lang.code),
-                              child: InkWell(
+            ),
+            _Section(
+              title: t('best'),
+              trailing: TextButton(
+                onPressed: () => context.go('/crops'),
+                child: Text(t('all')),
+              ),
+              child: AsyncBody(
+                value: model,
+                onRetry: () => ref.invalidate(modelProvider),
+                builder: (m) => SizedBox(
+                  height: 140,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (final c in m.rankedEligible.take(6))
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 12),
+                          child: Semantics(
+                            button: true,
+                            label: c.name(lang.code),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(16),
+                              onTap: () => context.go('/crop/${c.id}'),
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                onTap: () => context.go('/crop/${c.id}'),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: SizedBox(
-                                    width: 160,
-                                    height: 136,
-                                    child: Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        CropImage(c),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional.bottomStart,
-                                          child: Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.fromLTRB(
-                                              10,
-                                              18,
-                                              10,
-                                              8,
+                                child: SizedBox(
+                                  width: 160,
+                                  height: 136,
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      CropImage(c),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional.bottomStart,
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.fromLTRB(
+                                            10,
+                                            18,
+                                            10,
+                                            8,
+                                          ),
+                                          decoration: const BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Colors.transparent,
+                                                Color(0x99000000),
+                                              ],
                                             ),
-                                            decoration: const BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  Colors.transparent,
-                                                  Color(0x99000000),
-                                                ],
-                                              ),
-                                            ),
-                                            child: Text(
-                                              '${c.name(lang.code)} · ${(m.chances[c.id]! * 100).round()}%',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 15,
-                                              ),
+                                          ),
+                                          child: Text(
+                                            '${c.name(lang.code)} · ${(m.chance(c.id)! * 100).round()}%',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 15,
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
                 ),
               ),
-              const SourceNote(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 6, 24, 24),
-                child: Text(
-                  t('prov_needs'),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ],
-          ),
+            ),
+            const SourceNote(),
+            const SizedBox(height: 24),
+          ],
         ),
       ],
     );
@@ -352,15 +346,13 @@ class _Section extends StatelessWidget {
   );
 }
 
-class _FieldRow extends ConsumerWidget {
-  const _FieldRow({required this.town});
-  final Town town;
+class _FarmRow extends ConsumerWidget {
+  const _FarmRow({required this.farm});
+  final Farm farm;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = trOf(ref);
-    final lang = ref.watch(langProvider);
-    final farm = ref.watch(farmProvider);
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
       child: SamaCard(
@@ -371,12 +363,14 @@ class _FieldRow extends ConsumerWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                '${town.name(lang.code)} · ${t('soil_${farm.soil.name}')} · ${farm.areaHa} ha',
+                '${farm.name} · ${farm.soilKnown ? t('soil_${farm.soil.name}') : '?'} · ${farm.areaHa} ha',
                 style: const TextStyle(fontWeight: FontWeight.w700),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             TextButton(
-              onPressed: () => context.go('/field'),
+              onPressed: () => context.go('/farm/location'),
               child: Text(t('edit')),
             ),
           ],
@@ -387,15 +381,14 @@ class _FieldRow extends ConsumerWidget {
 }
 
 class _WeatherCard extends ConsumerWidget {
-  const _WeatherCard({required this.town, required this.m, required this.now});
-  final Town town;
+  const _WeatherCard({required this.farm, required this.m, required this.now});
+  final Farm farm;
   final FieldModel m;
   final DateTime now;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = trOf(ref);
-    final lang = ref.watch(langProvider);
     final c = m.climate;
     String fmt(double? v, int d, [String unit = '']) =>
         v == null ? '–' : '${v.toStringAsFixed(d)}$unit';
@@ -405,12 +398,13 @@ class _WeatherCard extends ConsumerWidget {
     final wind = c.climToday('WS2M', now);
     final ps = c.climToday('PS', now);
     final sun = sunTimes(
-      lat: town.lat,
-      lon: town.lon,
+      lat: farm.lat,
+      lon: farm.lon,
       date: now,
       utcOffset: moroccoUtcOffset,
     );
     final nowMin = now.hour * 60.0 + now.minute;
+    final cell = c.cellText;
 
     return SamaCard(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 14),
@@ -423,14 +417,19 @@ class _WeatherCard extends ConsumerWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  '${town.name(lang.code)} · ${t('place_hint')}',
+                  farm.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
                 ),
               ),
-              SpeakerButton(PhraseBuilder.weather(town.id), size: 40),
+              SpeakerButton(
+                PhraseBuilder.weather(
+                  m.resolution.referenceName ?? 'boufakrane',
+                ),
+                size: 40,
+              ),
             ],
           ),
           Row(
@@ -500,8 +499,12 @@ class _WeatherCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          // Labelled as climatology, never a live forecast.
+          // Labelled as climatology and as grid data, never a live forecast or a field measurement.
           Text(t('wx_typical'), style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            t('grid_note').replaceFirst('%s', cell),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ],
       ),
     );
@@ -581,4 +584,27 @@ class _ArcPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ArcPainter old) => old.fraction != fraction;
+}
+
+/// Green header with rounded bottom corners. It is painted [extra] px BELOW its layout box so the weather card
+/// can sit in normal layout flow and still overlap it (a Transform would leave part of the card untappable).
+class _HeaderPainter extends CustomPainter {
+  const _HeaderPainter({required this.extra});
+  final double extra;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final r = RRect.fromLTRBAndCorners(
+      0,
+      0,
+      size.width,
+      size.height + extra,
+      bottomLeft: const Radius.circular(30),
+      bottomRight: const Radius.circular(30),
+    );
+    canvas.drawRRect(r, Paint()..color = SamaColors.green);
+  }
+
+  @override
+  bool shouldRepaint(_HeaderPainter old) => old.extra != extra;
 }

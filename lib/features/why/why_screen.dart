@@ -5,11 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/colors.dart';
 import '../../core/constants.dart';
-import '../../data/towns.dart';
-import '../../domain/season_classifier.dart';
-import '../../domain/water_balance.dart';
-import '../../state/farm_state.dart';
-import '../../state/results_provider.dart';
+import '../../domain/scenarios.dart';
 import '../../state/settings.dart';
 import '../../widgets/common.dart';
 
@@ -30,9 +26,6 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
     final t = trOf(ref);
     final lang = ref.watch(langProvider);
     final advisor = ref.watch(settingsProvider.select((s) => s.advisor));
-    final model = ref.watch(fieldModelProvider);
-    final farm = ref.watch(farmProvider);
-    final town = townById(farm.townId);
 
     return ListView(
       padding: const EdgeInsets.only(bottom: 24),
@@ -42,28 +35,22 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
           onBack: () =>
               context.canPop() ? context.pop() : context.go('/results'),
         ),
-        AsyncBody(
-          value: model,
-          onRetry: () => ref.invalidate(fieldModelProvider),
+        ModelBody(
           builder: (m) {
-            final id = _crop ?? widget.cropId ?? m.rankedAnnuals.first.id;
+            final eligible = m.catalog.eligible;
+            var id = _crop ?? widget.cropId ?? m.rankedEligible.first.id;
+            if (!eligible.any((c) => c.id == id)) {
+              id = m.rankedEligible.first.id;
+            }
             final crop = m.catalog.byId(id);
-            final rains = m.ctx.rains;
-            final good = classifySeasons(
-              rains,
-              crop.waterNeed!,
-              m.ctx.soil,
-              previousLegume: m.ctx.previousLegume,
-            );
-            final need = waterNeeded(
-              crop.waterNeed!,
-              previousLegume: m.ctx.previousLegume,
-            );
-            // Rain at which available water equals the need.
-            final rainNeeded = (need - 2400 * m.ctx.soil.factor) / (10 * 0.65);
-            final dryCount = good.where((g) => !g).length;
-            final maxY = (rains.reduce((a, b) => a > b ? a : b) * 1.1)
-                .ceilToDouble();
+            final spec = crop.model!;
+            final ry = m.matrix.ryList(id);
+            final dryCount = ry.where((v) => v < m.threshold).length;
+            final cell = m.climate.cellText;
+            final mean = ry.reduce((a, b) => a + b) / ry.length;
+            final outs = m.matrix.byCrop[id]!;
+            double avg(double Function(dynamic) f) =>
+                outs.map(f).reduce((a, b) => a + b) / outs.length;
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -75,7 +62,7 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                     isExpanded: true,
                     hint: Text(t('pick_crop')),
                     items: [
-                      for (final c in m.catalog.annuals)
+                      for (final c in eligible)
                         DropdownMenuItem(
                           value: c.id,
                           child: Text(c.name(lang.code)),
@@ -96,7 +83,7 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                           height: 220,
                           child: BarChart(
                             BarChartData(
-                              maxY: maxY,
+                              maxY: 1,
                               minY: 0,
                               gridData: const FlGridData(
                                 drawVerticalLine: false,
@@ -105,10 +92,15 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                               titlesData: FlTitlesData(
                                 topTitles: const AxisTitles(),
                                 rightTitles: const AxisTitles(),
-                                leftTitles: const AxisTitles(
+                                leftTitles: AxisTitles(
                                   sideTitles: SideTitles(
                                     showTitles: true,
                                     reservedSize: 38,
+                                    interval: 0.25,
+                                    getTitlesWidget: (v, _) => Text(
+                                      '${(v * 100).round()}%',
+                                      style: const TextStyle(fontSize: 11),
+                                    ),
                                   ),
                                 ),
                                 bottomTitles: AxisTitles(
@@ -128,7 +120,7 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                               extraLinesData: ExtraLinesData(
                                 horizontalLines: [
                                   HorizontalLine(
-                                    y: rainNeeded.clamp(0, maxY),
+                                    y: m.threshold,
                                     color: SamaColors.ink,
                                     strokeWidth: 2,
                                     dashArray: [6, 4],
@@ -136,18 +128,18 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                                 ],
                               ),
                               barGroups: [
-                                for (var i = 0; i < rains.length; i++)
+                                for (var i = 0; i < ry.length; i++)
                                   BarChartGroupData(
                                     x: i,
                                     barRods: [
                                       BarChartRodData(
-                                        toY: rains[i],
+                                        toY: ry[i],
                                         width: 5,
-                                        color: good[i]
+                                        color: ry[i] >= m.threshold
                                             ? SamaColors.green
                                             : SamaColors.danger,
-                                        // Dry bars get an outline: not colour alone.
-                                        borderSide: good[i]
+                                        // Hard seasons get an outline: not colour alone.
+                                        borderSide: ry[i] >= m.threshold
                                             ? BorderSide.none
                                             : const BorderSide(
                                                 color: SamaColors.ink,
@@ -162,7 +154,6 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        // Legend with icons, not just colours.
                         Wrap(
                           spacing: 16,
                           runSpacing: 6,
@@ -174,7 +165,7 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                               children: [
                                 const Icon(Icons.horizontal_rule, size: 18),
                                 Text(
-                                  ' ${t('legend_need')}: ${rainNeeded.round()} mm',
+                                  ' ${t('legend_thr')}: ${(m.threshold * 100).round()}%',
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -205,7 +196,11 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                           style: const TextStyle(fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          '${town.name(lang.code)}: ${m.climate.lat.toStringAsFixed(2)}, ${m.climate.lon.toStringAsFixed(2)}',
+                          t('grid_note').replaceFirst('%s', cell),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        Text(
+                          '${t('coverage')}: ${m.climate.coverageText}',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
@@ -218,12 +213,12 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         for (final k in [
-                          'as_season',
-                          'as_avail',
-                          'as_need',
-                          'as_fail',
+                          'as_model',
+                          'as_yield',
                           'as_future',
-                          'prov_needs',
+                          'as_irrig',
+                          'as_bias',
+                          'prov_params',
                         ])
                           _Bullet(t(k)),
                         const SizedBox(height: 12),
@@ -233,7 +228,7 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                         ),
                         for (final k in [
                           'ch_soil_better',
-                          'ch_prev',
+                          'ch_irr',
                           'ch_crop',
                           'ch_rain',
                         ])
@@ -253,37 +248,52 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                           ),
                           const SizedBox(height: 6),
                           _Param(
-                            'B_c',
-                            '${crop.waterNeed!.round()} ${t('water_unit')}',
+                            'Kc ini / mid / end',
+                            '${spec.kcIni} / ${spec.kcMid} / ${spec.kcEnd}',
                           ),
                           _Param(
-                            'W_need',
-                            '${need.round()} ${t('water_unit')}',
+                            'stages (ini/dev/mid/late)',
+                            spec.stages.join(' / '),
+                          ),
+                          _Param('Zr max · p', '${spec.zrMax} m · ${spec.p}'),
+                          _Param('Ky (FAO-33)', '${spec.ky}'),
+                          _Param('verified', '${spec.verified}'),
+                          _Param('TAW', '${m.assumptions.tawPerM} mm/m'),
+                          _Param(
+                            'soil depth · irrigation',
+                            '${m.params.soilDepthM} m · ${m.params.irrigationMm.round()} mm',
                           ),
                           _Param(
-                            'f_soil',
-                            m.ctx.soil.factor.toStringAsFixed(2),
-                          ),
-                          _Param(
-                            'Q',
-                            '${ModelConstants.baselineQ.round()} ${t('water_unit')}',
-                          ),
-                          _Param(
-                            'effective rain',
-                            ModelConstants.effectiveRain.toString(),
-                          ),
-                          _Param(
-                            'failure',
-                            '${(ModelConstants.nonClimateFailure * 100).round()}%',
+                            'threshold',
+                            '${(m.threshold * 100).round()}%',
                           ),
                           _Param(
                             'runs / seed',
                             '${ModelConstants.simulations} / ${ModelConstants.seed}',
                           ),
-                          _Param('rain needed', '${rainNeeded.round()} mm'),
                           _Param(
-                            'mean rain',
-                            '${(rains.reduce((a, b) => a + b) / rains.length).round()} mm',
+                            '${t('et0')} (mean)',
+                            '${avg((o) => o.et0Cycle as double).round()} mm',
+                          ),
+                          _Param(
+                            '${t('etc')} (mean)',
+                            '${avg((o) => o.etc as double).round()} mm',
+                          ),
+                          _Param(
+                            '${t('eff_rain')} (mean)',
+                            '${avg((o) => o.effectiveRain as double).round()} mm',
+                          ),
+                          _Param(
+                            '${t('deficit')} (mean)',
+                            '${avg((o) => o.deficit as double).round()} mm',
+                          ),
+                          _Param(
+                            'mean relative yield',
+                            '${(mean * 100).round()}%',
+                          ),
+                          _Param(
+                            'worst · best',
+                            '${seasonLabel(ry.indexOf(ry.reduce((a, b) => a < b ? a : b)))} · ${seasonLabel(ry.indexOf(ry.reduce((a, b) => a > b ? a : b)))}',
                           ),
                         ],
                       ),

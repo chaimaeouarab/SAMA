@@ -4,16 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/colors.dart';
-import '../../core/constants.dart';
-import '../../data/towns.dart';
-import '../../domain/season_classifier.dart';
+import '../../domain/scenarios.dart';
 import '../../state/farm_state.dart';
-import '../../state/results_provider.dart';
 import '../../state/settings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/crop_art.dart';
 
-/// Reference crop for the good/dry marks of the past seasons.
+/// Reference crop for the good/hard marks of the past seasons.
 class ResultsCrop extends Notifier<String> {
   @override
   String build() => 'softwheat';
@@ -31,26 +28,21 @@ class ResultsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = trOf(ref);
     final lang = ref.watch(langProvider);
-    final model = ref.watch(fieldModelProvider);
     final farm = ref.watch(farmProvider);
     final cropId = ref.watch(resultsCropProvider);
-    final town = townById(farm.townId);
 
     return ListView(
       padding: const EdgeInsets.only(bottom: 24),
       children: [
         SamaTopBar(title: t('season_rain')),
-        AsyncBody(
-          value: model,
-          onRetry: () => ref.invalidate(fieldModelProvider),
+        ModelBody(
           builder: (m) {
-            final crop = m.catalog.byId(cropId);
-            final good = classifySeasons(
-              m.ctx.rains,
-              crop.waterNeed!,
-              m.ctx.soil,
-              previousLegume: m.ctx.previousLegume,
-            );
+            final eligible = m.catalog.eligible;
+            final id = eligible.any((c) => c.id == cropId)
+                ? cropId
+                : m.rankedEligible.first.id;
+            final ry = m.matrix.ryList(id);
+            final rains = m.climate.seasonRains;
             final toDate = m.climate.typicalSeasonToDate(DateTime.now());
             return Column(
               children: [
@@ -83,7 +75,7 @@ class ResultsScreen extends ConsumerWidget {
                               ),
                             ),
                             Text(
-                              '${town.name(lang.code)} · NASA POWER $dataYears',
+                              '${farm.name} · NASA POWER ${t('observed')}',
                               style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 13,
@@ -112,10 +104,10 @@ class ResultsScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 6),
                         DropdownButton<String>(
-                          value: cropId,
+                          value: id,
                           isExpanded: true,
                           items: [
-                            for (final c in m.catalog.annuals)
+                            for (final c in eligible)
                               DropdownMenuItem(
                                 value: c.id,
                                 child: Text(c.name(lang.code)),
@@ -124,7 +116,7 @@ class ResultsScreen extends ConsumerWidget {
                           onChanged: (v) =>
                               ref.read(resultsCropProvider.notifier).set(v!),
                         ),
-                        for (var i = good.length - 1; i >= 0; i--)
+                        for (var i = ry.length - 1; i >= 0; i--)
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: const BoxDecoration(
@@ -141,7 +133,9 @@ class ResultsScreen extends ConsumerWidget {
                                     height: 52,
                                     child: SvgPicture.string(
                                       wheatArtSvg(
-                                        good[i] ? '#E8B84A' : '#C9A56B',
+                                        ry[i] >= m.threshold
+                                            ? '#E8B84A'
+                                            : '#C9A56B',
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -154,14 +148,18 @@ class ResultsScreen extends ConsumerWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${seasonLabel(i)} · ${m.ctx.rains[i].round()} mm',
+                                        '${seasonLabel(i)} · ${rains[i].round()} mm · ${(ry[i] * 100).round()}%',
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       StatusLine(
-                                        good[i] ? Status.good : Status.warn,
-                                        t(good[i] ? 'good' : 'dry'),
+                                        ry[i] >= m.threshold
+                                            ? Status.good
+                                            : Status.warn,
+                                        t(
+                                          ry[i] >= m.threshold ? 'good' : 'dry',
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -171,9 +169,19 @@ class ResultsScreen extends ConsumerWidget {
                           ),
                         const SizedBox(height: 12),
                         FilledButton.icon(
-                          onPressed: () => context.go('/why?crop=$cropId'),
+                          onPressed: () => context.go('/why?crop=$id'),
                           icon: const Icon(Icons.help_outline),
                           label: Text(t('why')),
+                        ),
+                        const SizedBox(height: 10),
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(56),
+                            shape: const StadiumBorder(),
+                          ),
+                          onPressed: () => context.go('/time?crop=$id'),
+                          icon: const Icon(Icons.timeline),
+                          label: Text(t('tm_title')),
                         ),
                         const SizedBox(height: 10),
                         OutlinedButton.icon(

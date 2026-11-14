@@ -5,7 +5,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_router.dart';
-import 'core/strings.dart';
 import 'core/theme.dart';
 import 'state/settings.dart';
 
@@ -34,8 +33,8 @@ class SamaApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: samaTheme(),
       // Darija uses the Arabic locale, which mirrors the whole tree (RTL).
-      locale: Locale(lang.code),
-      supportedLocales: [for (final l in AppLang.values) Locale(l.code)],
+      locale: Locale(lang.localeCode),
+      supportedLocales: const [Locale('ar'), Locale('en'), Locale('fr')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

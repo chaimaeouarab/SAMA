@@ -1,469 +1,600 @@
 {
  "crop.softwheat": {
-  "ar": "القمح اللين",
+  "dar": "القمح اللين",
   "latin": "l9mh llin",
+  "ar": "القمح الطري",
   "en": "Soft wheat",
   "fr": "Blé tendre",
   "reviewed": false
  },
  "crop.durumwheat": {
-  "ar": "القمح الصلب",
+  "dar": "القمح الصلب",
   "latin": "l9mh sslb",
+  "ar": "القمح الصلب",
   "en": "Durum wheat",
   "fr": "Blé dur",
   "reviewed": false
  },
  "crop.barley": {
-  "ar": "الشعير",
+  "dar": "الشعير",
   "latin": "chi3ir",
+  "ar": "الشعير",
   "en": "Barley",
   "fr": "Orge",
   "reviewed": false
  },
  "crop.oats": {
-  "ar": "الخرطال",
+  "dar": "الخرطال",
   "latin": "lkhertal",
+  "ar": "الشوفان",
   "en": "Oats",
   "fr": "Avoine",
   "reviewed": false
  },
  "crop.maize": {
-  "ar": "الذرة",
+  "dar": "الذرة",
   "latin": "ddra",
+  "ar": "الذرة",
   "en": "Maize",
   "fr": "Maïs",
   "reviewed": false
  },
  "crop.sorghum": {
-  "ar": "الذرة الرفيعة",
+  "dar": "الذرة الرفيعة",
   "latin": "ddra rfi3a",
+  "ar": "الذرة الرفيعة",
   "en": "Sorghum",
   "fr": "Sorgho",
   "reviewed": false
  },
  "crop.fava": {
-  "ar": "الفول",
+  "dar": "الفول",
   "latin": "lfoul",
+  "ar": "الفول",
   "en": "Fava beans",
   "fr": "Fèves",
   "reviewed": false
  },
  "crop.chickpea": {
-  "ar": "الحمص",
+  "dar": "الحمص",
   "latin": "lhommos",
+  "ar": "الحمص",
   "en": "Chickpea",
   "fr": "Pois chiche",
   "reviewed": false
  },
  "crop.lentil": {
-  "ar": "العدس",
+  "dar": "العدس",
   "latin": "l3dss",
+  "ar": "العدس",
   "en": "Lentils",
   "fr": "Lentilles",
   "reviewed": false
  },
  "crop.pea": {
-  "ar": "الجلبانة",
+  "dar": "الجلبانة",
   "latin": "ljilbana",
+  "ar": "البازلاء",
   "en": "Peas",
   "fr": "Petits pois",
   "reviewed": false
  },
  "crop.onion": {
-  "ar": "البصلة",
+  "dar": "البصلة",
   "latin": "lbasla",
+  "ar": "البصل",
   "en": "Onion",
   "fr": "Oignon",
   "reviewed": false
  },
  "crop.garlic": {
-  "ar": "التوم",
+  "dar": "التوم",
   "latin": "ttoum",
+  "ar": "الثوم",
   "en": "Garlic",
   "fr": "Ail",
   "reviewed": false
  },
  "crop.potato": {
-  "ar": "البطاطا",
+  "dar": "البطاطا",
   "latin": "lbatata",
+  "ar": "البطاطس",
   "en": "Potato",
   "fr": "Pomme de terre",
   "reviewed": false
  },
  "crop.carrot": {
-  "ar": "الخيزو",
+  "dar": "الخيزو",
   "latin": "lkhizzou",
+  "ar": "الجزر",
   "en": "Carrot",
   "fr": "Carotte",
   "reviewed": false
  },
  "crop.tomato": {
-  "ar": "الماطيشة",
+  "dar": "الماطيشة",
   "latin": "lmatisha",
+  "ar": "الطماطم",
   "en": "Tomato",
   "fr": "Tomate",
   "reviewed": false
  },
  "crop.pepper": {
-  "ar": "الفلفلة",
+  "dar": "الفلفلة",
   "latin": "lflifla",
+  "ar": "الفلفل",
   "en": "Pepper",
   "fr": "Poivron",
   "reviewed": false
  },
  "crop.courgette": {
-  "ar": "القرعة",
+  "dar": "القرعة",
   "latin": "l9r3a",
+  "ar": "الكوسا",
   "en": "Courgette",
   "fr": "Courgette",
   "reviewed": false
  },
  "crop.cabbage": {
-  "ar": "الكرنب",
+  "dar": "الكرنب",
   "latin": "lkrnb",
+  "ar": "الملفوف",
   "en": "Cabbage",
   "fr": "Chou",
   "reviewed": false
  },
  "crop.watermelon": {
-  "ar": "الدلاح",
+  "dar": "الدلاح",
   "latin": "ddlla7",
+  "ar": "البطيخ الأحمر",
   "en": "Watermelon",
   "fr": "Pastèque",
   "reviewed": false
  },
  "crop.melon": {
-  "ar": "الشمام",
+  "dar": "الشمام",
   "latin": "chmam",
+  "ar": "الشمام",
   "en": "Melon",
   "fr": "Melon",
   "reviewed": false
  },
  "crop.sunflower": {
-  "ar": "عباد الشمس",
+  "dar": "عباد الشمس",
   "latin": "3bbad chchams",
+  "ar": "دوار الشمس",
   "en": "Sunflower",
   "fr": "Tournesol",
   "reviewed": false
  },
  "crop.rapeseed": {
-  "ar": "الكولزا",
+  "dar": "الكولزا",
   "latin": "lkolza",
+  "ar": "اللفت الزيتي",
   "en": "Rapeseed",
   "fr": "Colza",
   "reviewed": false
  },
  "crop.sugarbeet": {
-  "ar": "الشمندر السكري",
+  "dar": "الشمندر السكري",
   "latin": "chmandar ssokkari",
+  "ar": "الشمندر السكري",
   "en": "Sugar beet",
   "fr": "Betterave sucrière",
   "reviewed": false
  },
  "crop.alfalfa": {
-  "ar": "الفصة",
+  "dar": "الفصة",
   "latin": "lfesa",
+  "ar": "البرسيم الحجازي",
   "en": "Alfalfa",
   "fr": "Luzerne",
   "reviewed": false
  },
  "crop.olive": {
-  "ar": "الزيتون",
+  "dar": "الزيتون",
   "latin": "zzitoun",
+  "ar": "الزيتون",
   "en": "Olive",
   "fr": "Olivier",
   "reviewed": false
  },
  "crop.almond": {
-  "ar": "اللوز",
+  "dar": "اللوز",
   "latin": "llouz",
+  "ar": "اللوز",
   "en": "Almond",
   "fr": "Amandier",
   "reviewed": false
  },
  "crop.grape": {
-  "ar": "العنب",
+  "dar": "العنب",
   "latin": "l3nb",
+  "ar": "العنب",
   "en": "Grape",
   "fr": "Vigne",
   "reviewed": false
  },
  "crop.fig": {
-  "ar": "الكرموس",
+  "dar": "الكرموس",
   "latin": "lkarmous",
+  "ar": "التين",
   "en": "Fig",
   "fr": "Figuier",
   "reviewed": false
  },
  "crop.citrus": {
-  "ar": "الحوامض",
+  "dar": "الحوامض",
   "latin": "l7wamed",
+  "ar": "الحمضيات",
   "en": "Citrus",
   "fr": "Agrumes",
   "reviewed": false
  },
  "crop.apple": {
-  "ar": "التفاح",
+  "dar": "التفاح",
   "latin": "ttfa7",
+  "ar": "التفاح",
   "en": "Apple",
   "fr": "Pommier",
   "reviewed": false
  },
  "crop.pomegranate": {
-  "ar": "الرمان",
+  "dar": "الرمان",
   "latin": "rrmman",
+  "ar": "الرمان",
   "en": "Pomegranate",
   "fr": "Grenadier",
   "reviewed": false
  },
  "crop.plum": {
-  "ar": "البرقوق",
+  "dar": "البرقوق",
   "latin": "lbarqouq",
+  "ar": "البرقوق",
   "en": "Plum",
   "fr": "Prunier",
   "reviewed": false
  },
  "num.0": {
-  "ar": "صفر",
+  "dar": "صفر",
   "latin": "sifr",
+  "ar": "صفر",
   "en": "zero",
   "fr": "zéro",
   "reviewed": false
  },
  "num.1": {
-  "ar": "واحد",
+  "dar": "واحد",
   "latin": "wa7ed",
+  "ar": "واحد",
   "en": "one",
   "fr": "un",
   "reviewed": false
  },
  "num.2": {
-  "ar": "جوج",
+  "dar": "جوج",
   "latin": "jouj",
+  "ar": "اثنان",
   "en": "two",
   "fr": "deux",
   "reviewed": false
  },
  "num.3": {
-  "ar": "تلاتة",
+  "dar": "تلاتة",
   "latin": "tlata",
+  "ar": "ثلاثة",
   "en": "three",
   "fr": "trois",
   "reviewed": false
  },
  "num.4": {
-  "ar": "ربعة",
+  "dar": "ربعة",
   "latin": "rb3a",
+  "ar": "أربعة",
   "en": "four",
   "fr": "quatre",
   "reviewed": false
  },
  "num.5": {
-  "ar": "خمسة",
+  "dar": "خمسة",
   "latin": "khamsa",
+  "ar": "خمسة",
   "en": "five",
   "fr": "cinq",
   "reviewed": false
  },
  "num.6": {
-  "ar": "ستة",
+  "dar": "ستة",
   "latin": "stta",
+  "ar": "ستة",
   "en": "six",
   "fr": "six",
   "reviewed": false
  },
  "num.7": {
-  "ar": "سبعة",
+  "dar": "سبعة",
   "latin": "sb3a",
+  "ar": "سبعة",
   "en": "seven",
   "fr": "sept",
   "reviewed": false
  },
  "num.8": {
-  "ar": "تمنية",
+  "dar": "تمنية",
   "latin": "tmnya",
+  "ar": "ثمانية",
   "en": "eight",
   "fr": "huit",
   "reviewed": false
  },
  "num.9": {
-  "ar": "تسعود",
+  "dar": "تسعود",
   "latin": "ts3oud",
+  "ar": "تسعة",
   "en": "nine",
   "fr": "neuf",
   "reviewed": false
  },
  "num.10": {
-  "ar": "عشرة",
+  "dar": "عشرة",
   "latin": "3chra",
+  "ar": "عشرة",
   "en": "ten",
   "fr": "dix",
   "reviewed": false
  },
- "lang.ar": {
-  "ar": "الدارجة",
+ "lang.dar": {
+  "dar": "الدارجة",
   "latin": "ddarija",
-  "en": "Darija",
-  "fr": "Darija",
+  "ar": "الدارجة المغربية",
+  "en": "Moroccan Darija",
+  "fr": "Darija marocaine",
+  "reviewed": false
+ },
+ "lang.ar": {
+  "dar": "العربية",
+  "latin": "l3arabia",
+  "ar": "العربية الفصحى",
+  "en": "Arabic",
+  "fr": "Arabe",
   "reviewed": false
  },
  "lang.en": {
-  "ar": "الإنجليزية",
+  "dar": "الإنجليزية",
   "latin": "inglizia",
+  "ar": "الإنجليزية",
   "en": "English",
   "fr": "Anglais",
   "reviewed": false
  },
  "lang.fr": {
-  "ar": "الفرنسية",
+  "dar": "الفرنسية",
   "latin": "fransawia",
+  "ar": "الفرنسية",
   "en": "French",
   "fr": "Français",
   "reviewed": false
  },
  "greet.morning": {
-  "ar": "صباح الخير",
+  "dar": "صباح الخير",
   "latin": "sba7 lkhir",
+  "ar": "صباح الخير",
   "en": "Good morning",
   "fr": "Bonjour",
   "reviewed": false
  },
  "greet.afternoon": {
-  "ar": "نهارك سعيد",
+  "dar": "نهارك سعيد",
   "latin": "nharek sa3id",
+  "ar": "طاب يومك",
   "en": "Good afternoon",
   "fr": "Bon après-midi",
   "reviewed": false
  },
  "greet.evening": {
-  "ar": "مساء الخير",
+  "dar": "مساء الخير",
   "latin": "msa lkhir",
+  "ar": "مساء الخير",
   "en": "Good evening",
   "fr": "Bonsoir",
   "reviewed": false
  },
  "word.outof": {
-  "ar": "من",
+  "dar": "من",
   "latin": "men",
+  "ar": "من",
   "en": "in",
   "fr": "sur",
   "reviewed": false
  },
  "adv.chance": {
-  "ar": "حظ موسم مزيان",
+  "dar": "حظ موسم مزيان",
   "latin": "7ad mousim mziyan",
+  "ar": "فرصة موسم جيد",
   "en": "chance of a good season",
   "fr": "chance de bonne saison",
   "reviewed": false
  },
+ "adv.rot3": {
+  "dar": "حظ 3 مواسم مزيانين",
+  "latin": "7ad tlata mwassem mziyanin",
+  "ar": "فرصة ثلاثة مواسم جيدة",
+  "en": "chance of three good seasons",
+  "fr": "chance de trois bonnes saisons",
+  "reviewed": false
+ },
  "adv.not_guarantee": {
-  "ar": "ماشي ضمانة",
+  "dar": "ماشي ضمانة",
   "latin": "machi damana",
+  "ar": "ليس ضمانا",
   "en": "Not a guarantee",
   "fr": "Pas une garantie",
   "reviewed": false
  },
  "wx.intro": {
-  "ar": "الجو المعتاد فهاد النهار",
+  "dar": "الجو المعتاد فهاد النهار",
   "latin": "ljaw lm3tad f had nnhar",
+  "ar": "الطقس المعتاد لهذا اليوم",
   "en": "Typical weather for today",
   "fr": "Météo typique d'aujourd'hui",
   "reviewed": false
  },
  "wx.note": {
-  "ar": "ماشي توقعات",
+  "dar": "ماشي توقعات",
   "latin": "machi tawaqo3at",
+  "ar": "ليس توقعا",
   "en": "Not a live forecast",
   "fr": "Pas une prévision",
   "reviewed": false
  },
+ "farm.choose": {
+  "dar": "اختار الفلاحة ديالك",
+  "latin": "ikhtar lfla7a dyalek",
+  "ar": "اختر مزرعتك",
+  "en": "Choose your farm",
+  "fr": "Choisissez votre ferme",
+  "reviewed": false
+ },
+ "farm.selected": {
+  "dar": "الفلاحة ديالك تختارات. يالله نشوفو الخيارات",
+  "latin": "lfla7a dyalek tkhtarat. yalah nchoufo lkhiyarat",
+  "ar": "تم اختيار مزرعتك. لنستكشف خياراتك",
+  "en": "Your farm is selected. Let's explore your options",
+  "fr": "Votre ferme est sélectionnée. Explorons vos options",
+  "reviewed": false
+ },
  "ans.crop": {
-  "ar": "هادو أحسن الزراعات ليك",
+  "dar": "هادو أحسن الزراعات ليك",
   "latin": "hadou a7sen zzra3at lik",
+  "ar": "هذه أفضل المحاصيل لك",
   "en": "These are the best crops for you",
   "fr": "Voici les meilleures cultures pour vous",
   "reviewed": false
  },
  "ans.water": {
-  "ar": "هادا هو الما اللي خاص لكل زراعة",
+  "dar": "هادا هو الما اللي خاص لكل زراعة",
   "latin": "hada howa lma lli khass l kol zra3a",
+  "ar": "هذا هو الماء الذي يحتاجه كل محصول",
   "en": "This is the water each crop needs",
   "fr": "Voici l'eau nécessaire pour chaque culture",
   "reviewed": false
  },
  "ans.timing": {
-  "ar": "هادا هو الشتا شهر بشهر",
+  "dar": "هادا هو الشتا شهر بشهر",
   "latin": "hada howa chta chhar b chhar",
+  "ar": "هذا هو المطر شهرا بشهر",
   "en": "This is the rain month by month",
   "fr": "Voici la pluie mois par mois",
   "reviewed": false
  },
  "ans.risk": {
-  "ar": "هادا هو الخطر ديال المواسم الناشفة",
-  "latin": "hada howa lkhatar d lmawassem nnachfa",
-  "en": "This is the risk of dry seasons",
-  "fr": "Voici le risque de saisons sèches",
+  "dar": "هادا هو الخطر ديال المواسم الصعيبة",
+  "latin": "hada howa lkhatar d lmawassem ssa3iba",
+  "ar": "هذه مخاطر المواسم الصعبة",
+  "en": "This is the risk of hard seasons",
+  "fr": "Voici le risque de saisons difficiles",
   "reviewed": false
  },
  "ans.field": {
-  "ar": "بدل الفلاحة ديالك",
+  "dar": "بدل الفلاحة ديالك",
   "latin": "bddel lfla7a dyalek",
+  "ar": "غيّر مزرعتك",
   "en": "Change your field",
   "fr": "Changez votre champ",
   "reviewed": false
  },
+ "ans.rotation": {
+  "dar": "هادا أحسن تناوب ليك",
+  "latin": "hada a7sen tanaoub lik",
+  "ar": "هذا أفضل تناوب لك",
+  "en": "This is the best rotation for you",
+  "fr": "Voici la meilleure rotation pour vous",
+  "reviewed": false
+ },
+ "ans.lessrain": {
+  "dar": "غادي نشوفو شنو إلا قلت الشتا ب 20 فالمية. هادا سيناريو ماشي حقيقة",
+  "latin": "ghadi nchoufo chno ila 9allat chta b 20 f lmia. hada senario machi 7a9i9a",
+  "ar": "نفعّل سيناريو: مطر أقل بنسبة عشرين بالمئة. هذا افتراض وليس رصدا",
+  "en": "Less rain scenario: 20 percent less rain. This is a what-if, not an observation",
+  "fr": "Scénario : 20 pour cent de pluie en moins. C'est une hypothèse, pas une observation",
+  "reviewed": false
+ },
+ "ans.explain": {
+  "dar": "هادا علاش: 40 موسم حقيقي من ناسا",
+  "latin": "hada 3lach: 40 mousim 7a9i9i men nasa",
+  "ar": "هذا هو السبب: 40 موسما حقيقيا من بيانات ناسا",
+  "en": "This is why: 40 real seasons of NASA data",
+  "fr": "Voici pourquoi : 40 saisons réelles de données NASA",
+  "reviewed": false
+ },
  "ui.not_understood": {
-  "ar": "ما فهمتش",
+  "dar": "ما فهمتش",
   "latin": "ma fhemtch",
+  "ar": "لم أفهم",
   "en": "I did not understand",
   "fr": "Je n'ai pas compris",
   "reviewed": false
  },
  "ui.help": {
-  "ar": "تقدر تقول: شنو نزرع، شحال ديال الما، فاش نزرع، ولا شنو الخطر",
-  "latin": "t9der t9ol: chno nzra3, chhal d lma, fach nzra3, wla chno lkhatar",
-  "en": "You can say: which crop, how much water, when to plant, or what risk",
-  "fr": "Vous pouvez dire : quelle culture, combien d'eau, quand semer ou quel risque",
+  "dar": "تقدر تقول: شنو نزرع، شحال ديال الما، شنو إلا قلت الشتا، ولا شنو أحسن تناوب",
+  "latin": "t9der t9ol: chno nzra3, chhal d lma, chno ila 9allat chta, wla chno a7sen tanaoub",
+  "ar": "يمكنك أن تقول: ماذا أزرع، كم من الماء، ماذا لو قلّ المطر، أو ما أفضل تناوب",
+  "en": "You can say: which crop, how much water, what if there is less rain, or which rotation",
+  "fr": "Vous pouvez dire : quelle culture, combien d'eau, et s'il pleut moins, ou quelle rotation",
   "reviewed": false
  },
  "place.boufakrane": {
-  "ar": "بوفكران",
+  "dar": "بوفكران",
   "latin": "boufkran",
+  "ar": "بوفكران",
   "en": "Boufakrane",
   "fr": "Boufakrane",
   "reviewed": false
  },
  "place.elhajeb": {
-  "ar": "الحاجب",
+  "dar": "الحاجب",
   "latin": "l7ajeb",
+  "ar": "الحاجب",
   "en": "El Hajeb",
   "fr": "El Hajeb",
   "reviewed": false
  },
  "place.sebaaaioun": {
-  "ar": "سبع عيون",
+  "dar": "سبع عيون",
   "latin": "sb3 3youn",
+  "ar": "سبع عيون",
   "en": "Sebaa Aioun",
   "fr": "Sebaa Aioun",
   "reviewed": false
  },
  "place.aintaoujdate": {
-  "ar": "عين تاوجطات",
+  "dar": "عين تاوجطات",
   "latin": "3in taoujtat",
+  "ar": "عين تاوجدات",
   "en": "Aïn Taoujdate",
   "fr": "Aïn Taoujdate",
   "reviewed": false
  },
  "place.mhaya": {
-  "ar": "مهاية",
+  "dar": "مهاية",
   "latin": "mhaya",
+  "ar": "مهاية",
   "en": "Mhaya",
   "fr": "Mhaya",
   "reviewed": false
  },
+ "place.meknes": {
+  "dar": "مكناس",
+  "latin": "meknas",
+  "ar": "مكناس",
+  "en": "Meknès",
+  "fr": "Meknès",
+  "reviewed": false
+ },
  "place.erfoud": {
-  "ar": "أرفود",
+  "dar": "أرفود",
   "latin": "erfoud",
+  "ar": "أرفود",
   "en": "Erfoud",
   "fr": "Erfoud",
   "reviewed": false

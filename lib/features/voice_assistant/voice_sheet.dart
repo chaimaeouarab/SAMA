@@ -12,6 +12,7 @@ import '../../voice/phrase_builder.dart';
 import '../../voice/stt/stt_service.dart';
 import '../../widgets/language_sheet.dart';
 import '../../widgets/speaker.dart';
+import '../shock_lab/shock_lab_screen.dart';
 
 Future<void> showVoiceSheet(BuildContext context) {
   final router = GoRouter.of(context);
@@ -143,29 +144,55 @@ class _VoiceSheetState extends ConsumerState<_VoiceSheet> {
         return;
       case Intent.chooseField:
         Navigator.of(context).pop();
-        r.go('/field');
-        speakWith(c, msg, const ['ans.field']);
+        r.go('/farm/location');
+        speakWith(c, msg, PhraseBuilder.answer('field'));
       case Intent.water || Intent.timing || Intent.risk:
         Navigator.of(context).pop();
         r.go('/guided/${intent.name}');
-        speakWith(c, msg, ['ans.${intent.name}']);
+        speakWith(c, msg, PhraseBuilder.answer(intent.name));
+      case Intent.rotation:
+        Navigator.of(context).pop();
+        r.go('/time');
+        speakWith(c, msg, PhraseBuilder.answer('rotation'));
+      case Intent.explain:
+        Navigator.of(context).pop();
+        r.go('/why');
+        speakWith(c, msg, PhraseBuilder.answer('explain'));
+      case Intent.lessRain:
+        // Voice-guided simulation: switch on the dry what-if, show it, then say the main change.
+        Navigator.of(context).pop();
+        c.read(labStateProvider.notifier).lessRain();
+        r.go('/shock');
+        speakWith(c, msg, PhraseBuilder.answer('lessrain'));
+        final model = await c.read(modelProvider.future);
+        final start = model.rankedEligible.first.id;
+        final res = await c.read(labProvider(start).future);
+        final after = res.after;
+        if (after != null) {
+          await Future<void>.delayed(const Duration(seconds: 6));
+          speakWith(
+            c,
+            msg,
+            PhraseBuilder.rotation(res.sequence.first, after.inTen),
+          );
+        }
       case Intent.cropAdvice:
         Navigator.of(context).pop();
         if (cropId != null) {
           r.go('/crop/$cropId');
-          final fm = await c.read(fieldModelProvider.future);
-          final chance = fm.chances[cropId];
-          // Trees are not in the model: no number is ever spoken for them.
-          if (chance != null) {
+          final fm = await c.read(modelProvider.future);
+          final crop = fm.catalog.byId(cropId);
+          // Trees and crops without a documented value never get a spoken number.
+          if (crop.eligible) {
             speakWith(
               c,
               msg,
-              PhraseBuilder.advice(cropId, (chance * 10).round()),
+              PhraseBuilder.advice(cropId, (fm.chance(cropId)! * 10).round()),
             );
           }
         } else {
           r.go('/guided/crop');
-          speakWith(c, msg, const ['ans.crop']);
+          speakWith(c, msg, PhraseBuilder.answer('crop'));
         }
     }
   }
@@ -175,106 +202,109 @@ class _VoiceSheetState extends ConsumerState<_VoiceSheet> {
     final l = ref.watch(langProvider);
     String t(String k) => tr(k, l);
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (_phase == _Phase.reason) ...[
-              const Icon(Icons.mic, size: 56, color: SamaColors.green),
-              const SizedBox(height: 12),
-              Text(
-                t('mic_reason'),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _start, child: Text(t('mic_ok'))),
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: () => setState(() => _phase = _Phase.menu),
-                child: Text(t('i_help')),
-              ),
-            ],
-            if (_phase == _Phase.listening) ...[
-              Semantics(
-                liveRegion: true,
-                child: Container(
-                  width: 96,
-                  height: 96,
-                  decoration: const BoxDecoration(
-                    color: SamaColors.green,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.mic, color: Colors.white, size: 52),
-                ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                _transcript.isEmpty ? t('listening') : _transcript,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                t('listen_tip'),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              const SizedBox(height: 14),
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(160, 56),
-                ),
-                onPressed: () {
-                  _stt.cancel();
-                  Navigator.of(context).pop();
-                },
-                child: Text(t('cancel')),
-              ),
-            ],
-            if (_phase == _Phase.menu) ...[
-              if (_micProblem)
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_phase == _Phase.reason) ...[
+                const Icon(Icons.mic, size: 56, color: SamaColors.green),
+                const SizedBox(height: 12),
                 Text(
-                  t('mic_denied'),
+                  t('mic_reason'),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 18),
                 ),
-              if (_message != null)
+                const SizedBox(height: 16),
+                FilledButton(onPressed: _start, child: Text(t('mic_ok'))),
+                const SizedBox(height: 8),
+                TextButton(
+                  onPressed: () => setState(() => _phase = _Phase.menu),
+                  child: Text(t('i_help')),
+                ),
+              ],
+              if (_phase == _Phase.listening) ...[
+                Semantics(
+                  liveRegion: true,
+                  child: Container(
+                    width: 96,
+                    height: 96,
+                    decoration: const BoxDecoration(
+                      color: SamaColors.green,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.mic, color: Colors.white, size: 52),
+                  ),
+                ),
+                const SizedBox(height: 14),
                 Text(
-                  _message!,
+                  _transcript.isEmpty ? t('listening') : _transcript,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              const SizedBox(height: 12),
-              // 3-4 large buttons for the likely intents (also the whole UI when the mic is denied).
-              for (final b in [
-                (Intent.cropAdvice, 'i_crop', Icons.eco_outlined),
-                (Intent.water, 'i_water', Icons.water_drop_outlined),
-                (Intent.timing, 'i_timing', Icons.calendar_month_outlined),
-                (Intent.risk, 'i_risk', Icons.shield_outlined),
-              ])
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: FilledButton.icon(
-                    icon: Icon(b.$3),
-                    label: Text(t(b.$2)),
-                    onPressed: () => _run(b.$1),
+                const SizedBox(height: 4),
+                Text(
+                  t('listen_tip'),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 14),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(160, 56),
                   ),
+                  onPressed: () {
+                    _stt.cancel();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(t('cancel')),
                 ),
-              if (!_micProblem)
-                TextButton.icon(
-                  onPressed: _start,
-                  icon: const Icon(Icons.mic),
-                  label: Text(t('listen_tip')),
-                ),
+              ],
+              if (_phase == _Phase.menu) ...[
+                if (_micProblem)
+                  Text(
+                    t('mic_denied'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 17),
+                  ),
+                if (_message != null)
+                  Text(
+                    _message!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                const SizedBox(height: 12),
+                // Large buttons for the likely intents (also the whole UI when the mic is denied).
+                for (final b in [
+                  (Intent.cropAdvice, 'i_crop', Icons.eco_outlined),
+                  (Intent.water, 'i_water', Icons.water_drop_outlined),
+                  (Intent.lessRain, 'i_less_rain', Icons.cloud_off_outlined),
+                  (Intent.rotation, 'i_rotation', Icons.autorenew),
+                  (Intent.explain, 'i_explain', Icons.help_outline),
+                ])
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: FilledButton.icon(
+                      icon: Icon(b.$3),
+                      label: Text(t(b.$2)),
+                      onPressed: () => _run(b.$1),
+                    ),
+                  ),
+                if (!_micProblem)
+                  TextButton.icon(
+                    onPressed: _start,
+                    icon: const Icon(Icons.mic),
+                    label: Text(t('listen_tip')),
+                  ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

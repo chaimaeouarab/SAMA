@@ -1,7 +1,7 @@
 """Generate the bundled voice clips from assets/data/phrases.json. Run this on YOUR machine.
 
-Darija (male): the SpeechT5 Darija Hugging Face Space, via gradio_client, input = Latin-script Darija.
-English / French (male): edge-tts (optional, `pip install edge-tts`).
+Darija `dar` (male): the SpeechT5 Darija Hugging Face Space, via gradio_client, input = Latin-script Darija.
+Modern Standard Arabic `ar`, English `en`, French `fr` (male): edge-tts (optional, `pip install edge-tts`).
 
 Each clip is normalised (ffmpeg silenceremove + loudnorm, mono mp3) and written to
   assets/audio/darija/male/<phraseId>.mp3, assets/audio/en/male/..., assets/audio/fr/male/...
@@ -23,8 +23,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = {"ar": "darija", "en": "en", "fr": "fr"}
-EDGE_VOICE = {"en": "en-US-GuyNeural", "fr": "fr-FR-HenriNeural"}  # male
+OUT = {"dar": "darija", "ar": "ar", "en": "en", "fr": "fr"}
+# Male voices through edge-tts. MSA (ar) may use a system/Edge Arabic voice: it IS Modern Standard Arabic.
+EDGE_VOICE = {"ar": "ar-SA-HamedNeural", "en": "en-US-GuyNeural", "fr": "fr-FR-HenriNeural"}
 
 
 def normalise(src: Path, dst: Path):
@@ -52,7 +53,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--space", help="Hugging Face Space id, e.g. owner/name (Darija TTS)")
     ap.add_argument("--api-name", default="/predict")
-    ap.add_argument("--lang", nargs="+", default=["ar", "en", "fr"], choices=["ar", "en", "fr"])
+    ap.add_argument("--lang", nargs="+", default=["dar", "ar", "en", "fr"], choices=["dar", "ar", "en", "fr"])
     ap.add_argument("--token", default=os.environ.get("HF_TOKEN"))
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
@@ -62,7 +63,7 @@ def main():
     phrases = json.loads((ROOT / "assets/data/phrases.json").read_text(encoding="utf-8"))
 
     client = None
-    if "ar" in a.lang:
+    if "dar" in a.lang:
         if not a.space:
             sys.exit("--space is required for Darija")
         from gradio_client import Client
@@ -76,7 +77,7 @@ def main():
                     continue
                 raw = Path(tmp) / "raw.audio"
                 try:
-                    if lang == "ar":
+                    if lang == "dar":
                         darija_clip(client, a.api_name, p["latin"], raw)
                     else:
                         asyncio.run(edge_clip(EDGE_VOICE[lang], p[lang], raw))

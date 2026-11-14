@@ -42,12 +42,20 @@ class SettingsNotifier extends Notifier<SettingsState> {
   @override
   SettingsState build() {
     _p = ref.watch(prefsProvider);
+    _migrateLanguage();
     return SettingsState(
       lang: AppLang.fromCode(_p.getString('lang')),
       advisor: _p.getBool('advisor') ?? false,
       volume: _p.getDouble('volume') ?? 0.8,
       speed: _p.getDouble('speed') ?? 1.0,
     );
+  }
+
+  /// Phase 1 stored `ar` meaning Darija. Phase 2 has two Arabics: map the old `ar` to `dar`, once.
+  void _migrateLanguage() {
+    if (_p.getBool('langMigrated2') ?? false) return;
+    if (_p.getString('lang') == 'ar') _p.setString('lang', 'dar');
+    _p.setBool('langMigrated2', true);
   }
 
   void setLang(AppLang l) {

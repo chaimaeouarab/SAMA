@@ -20,11 +20,25 @@ class PhraseBuilder {
     'adv.not_guarantee',
   ];
 
-  static List<String> weather(String townId) => [
+  /// The place name is spoken only for a known preset, never invented for custom coordinates.
+  static List<String> weather([String? placeId]) => [
     'wx.intro',
-    'place.$townId',
+    if (placeId != null) 'place.$placeId',
     'wx.note',
   ];
+
+  /// `crop. chance of three good seasons: X in 10`
+  static List<String> rotation(String cropId, int inTen) => [
+    'crop.$cropId',
+    'adv.rot3',
+    'num.${inTen.clamp(0, 10)}',
+    'word.outof',
+    'num.10',
+    'adv.not_guarantee',
+  ];
+
+  /// One of the fixed answer sentences (see phrases.json, ids `ans.*`).
+  static List<String> answer(String key) => ['ans.$key'];
 
   static List<String> greeting(DateTime now) => [
     now.hour < 12

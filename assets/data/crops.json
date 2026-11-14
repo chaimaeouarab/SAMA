@@ -2,577 +2,1089 @@
  {
   "id": "softwheat",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 4500,
-  "sowMonths": [],
   "photo": "assets/images/crops/softwheat.jpg",
   "kind": "cereal",
   "c1": "#EBC45A",
   "c2": "#C98A1C",
   "names": {
-   "ar": "القمح اللين",
+   "dar": "القمح اللين",
+   "ar": "القمح الطري",
    "en": "Soft wheat",
    "fr": "Blé tendre"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 60,
+    "mid": 60,
+    "late": 40
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.15,
+    "end": 0.3
+   },
+   "zrMax": 1.5,
+   "p": 0.55,
+   "ky": 1.0,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "durumwheat",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 4500,
-  "sowMonths": [],
   "photo": "assets/images/crops/durumwheat.jpg",
   "kind": "cereal",
   "c1": "#E6B94E",
   "c2": "#B8791A",
   "names": {
+   "dar": "القمح الصلب",
    "ar": "القمح الصلب",
    "en": "Durum wheat",
    "fr": "Blé dur"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 60,
+    "mid": 60,
+    "late": 40
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.15,
+    "end": 0.3
+   },
+   "zrMax": 1.5,
+   "p": 0.55,
+   "ky": 1.0,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "barley",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 3500,
-  "sowMonths": [],
   "photo": "assets/images/crops/barley.jpg",
   "kind": "cereal",
   "c1": "#D9C26A",
   "c2": "#9E8A2F",
   "names": {
+   "dar": "الشعير",
    "ar": "الشعير",
    "en": "Barley",
    "fr": "Orge"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 55,
+    "mid": 55,
+    "late": 35
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.15,
+    "end": 0.25
+   },
+   "zrMax": 1.3,
+   "p": 0.55,
+   "ky": 1.0,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "oats",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 3500,
-  "sowMonths": [],
   "photo": "assets/images/crops/oats.jpg",
   "kind": "cereal",
   "c1": "#D8D58A",
   "c2": "#8C8A3A",
   "names": {
-   "ar": "الخرطال",
+   "dar": "الخرطال",
+   "ar": "الشوفان",
    "en": "Oats",
    "fr": "Avoine"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 55,
+    "mid": 55,
+    "late": 35
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.15,
+    "end": 0.25
+   },
+   "zrMax": 1.3,
+   "p": 0.55,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "maize",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 7000,
-  "sowMonths": [],
   "photo": "assets/images/crops/maize.jpg",
   "kind": "corn",
   "c1": "#E9D86A",
   "c2": "#D9A71C",
   "names": {
+   "dar": "الذرة",
    "ar": "الذرة",
    "en": "Maize",
    "fr": "Maïs"
+  },
+  "model": {
+   "sow": {
+    "month": 4,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 40,
+    "mid": 50,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.2,
+    "end": 0.35
+   },
+   "zrMax": 1.0,
+   "p": 0.55,
+   "ky": 1.25,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "sorghum",
   "category": "cereal",
+  "family": "Poaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5500,
-  "sowMonths": [],
   "photo": "assets/images/crops/sorghum.jpg",
   "kind": "corn",
   "c1": "#D9A27A",
   "c2": "#A8562A",
   "names": {
+   "dar": "الذرة الرفيعة",
    "ar": "الذرة الرفيعة",
    "en": "Sorghum",
    "fr": "Sorgho"
+  },
+  "model": {
+   "sow": {
+    "month": 5,
+    "day": 1
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 35,
+    "mid": 40,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.0,
+    "end": 0.55
+   },
+   "zrMax": 1.4,
+   "p": 0.55,
+   "ky": 0.9,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "fava",
   "category": "legume",
+  "family": "Fabaceae",
   "annual": true,
   "legume": true,
-  "waterNeedM3PerHa": 3500,
-  "sowMonths": [],
   "photo": "assets/images/crops/fava.jpg",
   "kind": "bean",
   "c1": "#8FC26A",
   "c2": "#3F7F2E",
   "names": {
+   "dar": "الفول",
    "ar": "الفول",
    "en": "Fava beans",
    "fr": "Fèves"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 35,
+    "mid": 45,
+    "late": 35
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 1.15,
+    "end": 0.3
+   },
+   "zrMax": 0.8,
+   "p": 0.45,
+   "ky": 1.15,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "chickpea",
   "category": "legume",
+  "family": "Fabaceae",
   "annual": true,
   "legume": true,
-  "waterNeedM3PerHa": 3000,
-  "sowMonths": [],
   "photo": "assets/images/crops/chickpea.jpg",
   "kind": "bean",
   "c1": "#E0C48A",
   "c2": "#B68A3C",
   "names": {
+   "dar": "الحمص",
    "ar": "الحمص",
    "en": "Chickpea",
    "fr": "Pois chiche"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 30
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 35,
+    "mid": 45,
+    "late": 25
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.0,
+    "end": 0.35
+   },
+   "zrMax": 0.8,
+   "p": 0.5,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "lentil",
   "category": "legume",
+  "family": "Fabaceae",
   "annual": true,
   "legume": true,
-  "waterNeedM3PerHa": 2800,
-  "sowMonths": [],
   "photo": "assets/images/crops/lentil.jpg",
   "kind": "bean",
   "c1": "#D39A6A",
   "c2": "#8E4A22",
   "names": {
+   "dar": "العدس",
    "ar": "العدس",
    "en": "Lentils",
    "fr": "Lentilles"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 30
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 40,
+    "late": 25
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.1,
+    "end": 0.3
+   },
+   "zrMax": 0.6,
+   "p": 0.5,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "pea",
   "category": "legume",
+  "family": "Fabaceae",
   "annual": true,
   "legume": true,
-  "waterNeedM3PerHa": 3000,
-  "sowMonths": [],
   "photo": "assets/images/crops/pea.jpg",
   "kind": "bean",
   "c1": "#9FD27A",
   "c2": "#4C9A34",
   "names": {
-   "ar": "الجلبانة",
+   "dar": "الجلبانة",
+   "ar": "البازلاء",
    "en": "Peas",
    "fr": "Petits pois"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 35,
+    "late": 20
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 1.15,
+    "end": 0.3
+   },
+   "zrMax": 0.8,
+   "p": 0.35,
+   "ky": 1.15,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "onion",
   "category": "veg",
+  "family": "Amaryllidaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 6500,
-  "sowMonths": [],
   "photo": "assets/images/crops/onion.jpg",
   "kind": "root",
   "c1": "#E3B2C7",
   "c2": "#9A4F73",
   "names": {
-   "ar": "البصلة",
+   "dar": "البصلة",
+   "ar": "البصل",
    "en": "Onion",
    "fr": "Oignon"
+  },
+  "model": {
+   "sow": {
+    "month": 12,
+    "day": 1
+   },
+   "stages": {
+    "ini": 15,
+    "dev": 25,
+    "mid": 70,
+    "late": 40
+   },
+   "kc": {
+    "ini": 0.7,
+    "mid": 1.05,
+    "end": 0.75
+   },
+   "zrMax": 0.4,
+   "p": 0.3,
+   "ky": 1.1,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "garlic",
   "category": "veg",
+  "family": "Amaryllidaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/garlic.jpg",
   "kind": "root",
   "c1": "#E8DCC8",
   "c2": "#B9A27C",
   "names": {
-   "ar": "التوم",
+   "dar": "التوم",
+   "ar": "الثوم",
    "en": "Garlic",
    "fr": "Ail"
+  },
+  "model": {
+   "sow": {
+    "month": 11,
+    "day": 15
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 80,
+    "late": 40
+   },
+   "kc": {
+    "ini": 0.7,
+    "mid": 1.0,
+    "end": 0.7
+   },
+   "zrMax": 0.4,
+   "p": 0.3,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "potato",
   "category": "veg",
+  "family": "Solanaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 6000,
-  "sowMonths": [],
   "photo": "assets/images/crops/potato.jpg",
   "kind": "root",
   "c1": "#D9B987",
   "c2": "#7A5A2B",
   "names": {
-   "ar": "البطاطا",
+   "dar": "البطاطا",
+   "ar": "البطاطس",
    "en": "Potato",
    "fr": "Pomme de terre"
+  },
+  "model": {
+   "sow": {
+    "month": 2,
+    "day": 15
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 30,
+    "mid": 45,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 1.15,
+    "end": 0.75
+   },
+   "zrMax": 0.5,
+   "p": 0.35,
+   "ky": 1.1,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "carrot",
   "category": "veg",
+  "family": "Apiaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/carrot.jpg",
   "kind": "root",
   "c1": "#F1C79A",
   "c2": "#E0762B",
   "names": {
-   "ar": "الخيزو",
+   "dar": "الخيزو",
+   "ar": "الجزر",
    "en": "Carrot",
    "fr": "Carotte"
+  },
+  "model": {
+   "sow": {
+    "month": 10,
+    "day": 15
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 50,
+    "late": 20
+   },
+   "kc": {
+    "ini": 0.7,
+    "mid": 1.05,
+    "end": 0.95
+   },
+   "zrMax": 0.5,
+   "p": 0.35,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "tomato",
   "category": "veg",
+  "family": "Solanaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 6500,
-  "sowMonths": [],
   "photo": "assets/images/crops/tomato.jpg",
   "kind": "fruitveg",
   "c1": "#F2B8A8",
   "c2": "#D8402B",
   "names": {
-   "ar": "الماطيشة",
+   "dar": "الماطيشة",
+   "ar": "الطماطم",
    "en": "Tomato",
    "fr": "Tomate"
+  },
+  "model": {
+   "sow": {
+    "month": 3,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 40,
+    "mid": 45,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.6,
+    "mid": 1.15,
+    "end": 0.8
+   },
+   "zrMax": 0.7,
+   "p": 0.4,
+   "ky": 1.05,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "pepper",
   "category": "veg",
+  "family": "Solanaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 6500,
-  "sowMonths": [],
   "photo": "assets/images/crops/pepper.jpg",
   "kind": "fruitveg",
   "c1": "#F1D49A",
   "c2": "#D8402B",
   "names": {
-   "ar": "الفلفلة",
+   "dar": "الفلفلة",
+   "ar": "الفلفل",
    "en": "Pepper",
    "fr": "Poivron"
+  },
+  "model": {
+   "sow": {
+    "month": 3,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 35,
+    "mid": 40,
+    "late": 20
+   },
+   "kc": {
+    "ini": 0.6,
+    "mid": 1.05,
+    "end": 0.9
+   },
+   "zrMax": 0.6,
+   "p": 0.3,
+   "ky": 1.1,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "courgette",
   "category": "veg",
+  "family": "Cucurbitaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/courgette.jpg",
   "kind": "fruitveg",
   "c1": "#BFE0A0",
   "c2": "#3F8A2E",
   "names": {
-   "ar": "القرعة",
+   "dar": "القرعة",
+   "ar": "الكوسا",
    "en": "Courgette",
    "fr": "Courgette"
+  },
+  "model": {
+   "sow": {
+    "month": 3,
+    "day": 15
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 25,
+    "late": 15
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 0.95,
+    "end": 0.75
+   },
+   "zrMax": 0.6,
+   "p": 0.5,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "cabbage",
   "category": "veg",
+  "family": "Brassicaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/cabbage.jpg",
   "kind": "leaf",
   "c1": "#CDE6C4",
   "c2": "#5FA24A",
   "names": {
-   "ar": "الكرنب",
+   "dar": "الكرنب",
+   "ar": "الملفوف",
    "en": "Cabbage",
    "fr": "Chou"
+  },
+  "model": {
+   "sow": {
+    "month": 10,
+    "day": 15
+   },
+   "stages": {
+    "ini": 40,
+    "dev": 60,
+    "mid": 50,
+    "late": 15
+   },
+   "kc": {
+    "ini": 0.7,
+    "mid": 1.05,
+    "end": 0.95
+   },
+   "zrMax": 0.5,
+   "p": 0.45,
+   "ky": 0.95,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "watermelon",
   "category": "veg",
+  "family": "Cucurbitaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/watermelon.jpg",
   "kind": "melon",
   "c1": "#BEE3A8",
   "c2": "#2F8A3E",
   "names": {
-   "ar": "الدلاح",
+   "dar": "الدلاح",
+   "ar": "البطيخ الأحمر",
    "en": "Watermelon",
    "fr": "Pastèque"
+  },
+  "model": {
+   "sow": {
+    "month": 4,
+    "day": 1
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 30,
+    "mid": 30,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.0,
+    "end": 0.75
+   },
+   "zrMax": 0.8,
+   "p": 0.4,
+   "ky": 1.1,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "melon",
   "category": "veg",
+  "family": "Cucurbitaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/melon.jpg",
   "kind": "melon",
   "c1": "#F4E3A0",
   "c2": "#E2A92B",
   "names": {
+   "dar": "الشمام",
    "ar": "الشمام",
    "en": "Melon",
    "fr": "Melon"
+  },
+  "model": {
+   "sow": {
+    "month": 4,
+    "day": 1
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 35,
+    "mid": 40,
+    "late": 20
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 1.05,
+    "end": 0.75
+   },
+   "zrMax": 0.8,
+   "p": 0.4,
+   "ky": 0.9,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "sunflower",
   "category": "industrial",
+  "family": "Asteraceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 5000,
-  "sowMonths": [],
   "photo": "assets/images/crops/sunflower.jpg",
   "kind": "sun",
   "c1": "#F6E39A",
   "c2": "#F0B400",
   "names": {
-   "ar": "عباد الشمس",
+   "dar": "عباد الشمس",
+   "ar": "دوار الشمس",
    "en": "Sunflower",
    "fr": "Tournesol"
+  },
+  "model": {
+   "sow": {
+    "month": 3,
+    "day": 15
+   },
+   "stages": {
+    "ini": 25,
+    "dev": 35,
+    "mid": 45,
+    "late": 25
+   },
+   "kc": {
+    "ini": 0.35,
+    "mid": 1.0,
+    "end": 0.35
+   },
+   "zrMax": 1.2,
+   "p": 0.45,
+   "ky": 0.95,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "rapeseed",
   "category": "industrial",
+  "family": "Brassicaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 4000,
-  "sowMonths": [],
   "photo": "assets/images/crops/rapeseed.jpg",
   "kind": "sun",
   "c1": "#EEF0A0",
   "c2": "#E7C700",
   "names": {
-   "ar": "الكولزا",
+   "dar": "الكولزا",
+   "ar": "اللفت الزيتي",
    "en": "Rapeseed",
    "fr": "Colza"
+  },
+  "model": {
+   "sow": {
+    "month": 10,
+    "day": 20
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 50,
+    "mid": 60,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.35,
+    "mid": 1.15,
+    "end": 0.35
+   },
+   "zrMax": 1.0,
+   "p": 0.6,
+   "ky": null,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "sugarbeet",
   "category": "industrial",
+  "family": "Chenopodiaceae",
   "annual": true,
   "legume": false,
-  "waterNeedM3PerHa": 7500,
-  "sowMonths": [],
   "photo": "assets/images/crops/sugarbeet.jpg",
   "kind": "root",
   "c1": "#E9C7D2",
   "c2": "#8A3A5B",
   "names": {
+   "dar": "الشمندر السكري",
    "ar": "الشمندر السكري",
    "en": "Sugar beet",
    "fr": "Betterave sucrière"
+  },
+  "model": {
+   "sow": {
+    "month": 10,
+    "day": 15
+   },
+   "stages": {
+    "ini": 30,
+    "dev": 45,
+    "mid": 90,
+    "late": 50
+   },
+   "kc": {
+    "ini": 0.35,
+    "mid": 1.2,
+    "end": 0.7
+   },
+   "zrMax": 1.2,
+   "p": 0.55,
+   "ky": 1.0,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "alfalfa",
   "category": "industrial",
+  "family": "Fabaceae",
   "annual": true,
-  "legume": false,
-  "waterNeedM3PerHa": 9000,
-  "sowMonths": [],
+  "legume": true,
   "photo": "assets/images/crops/alfalfa.jpg",
   "kind": "forage",
   "c1": "#C4E6A8",
   "c2": "#4C9A34",
   "names": {
-   "ar": "الفصة",
+   "dar": "الفصة",
+   "ar": "البرسيم الحجازي",
    "en": "Alfalfa",
    "fr": "Luzerne"
+  },
+  "model": {
+   "sow": {
+    "month": 10,
+    "day": 1
+   },
+   "stages": {
+    "ini": 20,
+    "dev": 50,
+    "mid": 150,
+    "late": 40
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.2,
+    "end": 1.15
+   },
+   "zrMax": 1.5,
+   "p": 0.55,
+   "ky": 1.1,
+   "verified": false
   },
   "reviewed": false
  },
  {
   "id": "olive",
   "category": "tree",
+  "family": "Oleaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/olive.jpg",
   "kind": "tree",
   "c1": "#DCE7C8",
   "c2": "#6B7F2E",
   "names": {
+   "dar": "الزيتون",
    "ar": "الزيتون",
    "en": "Olive",
    "fr": "Olivier"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "almond",
   "category": "tree",
+  "family": "Rosaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/almond.jpg",
   "kind": "tree",
   "c1": "#F4E6E8",
   "c2": "#C9A07A",
   "names": {
+   "dar": "اللوز",
    "ar": "اللوز",
    "en": "Almond",
    "fr": "Amandier"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "grape",
   "category": "tree",
+  "family": "Vitaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/grape.jpg",
   "kind": "vine",
   "c1": "#E5D3EE",
   "c2": "#6B3F86",
   "names": {
+   "dar": "العنب",
    "ar": "العنب",
    "en": "Grape",
    "fr": "Vigne"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "fig",
   "category": "tree",
+  "family": "Moraceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/fig.jpg",
   "kind": "tree",
   "c1": "#E8E0EE",
   "c2": "#6A3F5B",
   "names": {
-   "ar": "الكرموس",
+   "dar": "الكرموس",
+   "ar": "التين",
    "en": "Fig",
    "fr": "Figuier"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "citrus",
   "category": "tree",
+  "family": "Rutaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/citrus.jpg",
   "kind": "tree",
   "c1": "#FBE6B8",
   "c2": "#F28C1B",
   "names": {
-   "ar": "الحوامض",
+   "dar": "الحوامض",
+   "ar": "الحمضيات",
    "en": "Citrus",
    "fr": "Agrumes"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "apple",
   "category": "tree",
+  "family": "Rosaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/apple.jpg",
   "kind": "tree",
   "c1": "#F6D5D0",
   "c2": "#D8402B",
   "names": {
+   "dar": "التفاح",
    "ar": "التفاح",
    "en": "Apple",
    "fr": "Pommier"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "pomegranate",
   "category": "tree",
+  "family": "Lythraceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/pomegranate.jpg",
   "kind": "tree",
   "c1": "#F3C7C4",
   "c2": "#B52A2A",
   "names": {
+   "dar": "الرمان",
    "ar": "الرمان",
    "en": "Pomegranate",
    "fr": "Grenadier"
   },
+  "model": null,
   "reviewed": false
  },
  {
   "id": "plum",
   "category": "tree",
+  "family": "Rosaceae",
   "annual": false,
   "legume": false,
-  "waterNeedM3PerHa": null,
-  "sowMonths": [],
   "photo": "assets/images/crops/plum.jpg",
   "kind": "tree",
   "c1": "#E3D0EC",
   "c2": "#7A3F9A",
   "names": {
+   "dar": "البرقوق",
    "ar": "البرقوق",
    "en": "Plum",
    "fr": "Prunier"
   },
+  "model": null,
   "reviewed": false
  }
 ]

@@ -4,7 +4,8 @@ import 'package:speech_to_text/speech_to_text.dart';
 import '../../core/strings.dart';
 
 String sttLocale(AppLang l) => switch (l) {
-  AppLang.ar => 'ar_MA',
+  AppLang.dar => 'ar_MA',
+  AppLang.ar => 'ar_SA',
   AppLang.fr => 'fr_FR',
   AppLang.en => 'en_US',
 };

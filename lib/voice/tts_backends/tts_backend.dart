@@ -22,7 +22,8 @@ abstract class TtsBackend {
   Future<AudioRef?> resolve(Phrase phrase, AppLang lang);
 }
 
-String langDir(AppLang l) => l == AppLang.ar ? 'darija' : l.code;
+/// Folder of pre-generated clips per language (Darija keeps the historical folder name).
+String langDir(AppLang l) => l == AppLang.dar ? 'darija' : l.code;
 
 /// Pre-generated clips shipped in the app (scripts/build_phrase_audio.py).
 class BundledBackend implements TtsBackend {

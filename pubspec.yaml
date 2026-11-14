@@ -24,12 +24,15 @@ dependencies:
   intl: ^0.20.3
   speech_to_text: ^7.5.0
   permission_handler: ^13.0.2
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
   mocktail: ^1.0.5
+  plugin_platform_interface: ^2.1.8
 
 flutter:
   uses-material-design: true
@@ -38,5 +41,6 @@ flutter:
     - assets/images/crops/
     - assets/images/illustrations/
     - assets/audio/darija/male/
+    - assets/audio/ar/male/
     - assets/audio/en/male/
     - assets/audio/fr/male/

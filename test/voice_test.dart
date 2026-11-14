@@ -75,6 +75,32 @@ void main() {
       expect(matcher.match('pomme de terre').cropId, 'potato');
     });
 
+    test('Phase 2 intents in the four languages', () {
+      const cases = <String, Intent>{
+        'شنو إلا قلت الشتا': Intent.lessRain,
+        'ماذا لو قل المطر': Intent.lessRain,
+        'what if there is less rain': Intent.lessRain,
+        'et s il pleut moins': Intent.lessRain,
+        'chno ila 9allat chta': Intent.lessRain,
+        'شنو أحسن تناوب': Intent.rotation,
+        'ما أفضل تناوب': Intent.rotation,
+        'which rotation is more suitable': Intent.rotation,
+        'quelle rotation': Intent.rotation,
+        'explain this result': Intent.explain,
+        'اشرح النتيجة': Intent.explain,
+        'explique ce resultat': Intent.explain,
+        'ماذا أزرع': Intent.cropAdvice,
+        'كم من الماء': Intent.water,
+        'does it need a lot of water': Intent.water,
+        'متى أزرع': Intent.timing,
+      };
+      cases.forEach((said, intent) {
+        final m = matcher.match(said);
+        expect(m.intent, intent, reason: said);
+        expect(m.confident, isTrue, reason: said);
+      });
+    });
+
     test('low confidence is never guessed', () {
       for (final s in ['', 'blah blah zzz', 'qwertyuiop']) {
         expect(matcher.match(s).confident, isFalse, reason: s);
@@ -129,13 +155,38 @@ void main() {
       );
     });
 
-    test('all Darija is draft, never marked approved', () {
+    test('weather sentence never invents a place name', () {
+      expect(PhraseBuilder.weather(), ['wx.intro', 'wx.note']);
+      expect(PhraseBuilder.weather('meknes'), [
+        'wx.intro',
+        'place.meknes',
+        'wx.note',
+      ]);
+    });
+
+    test('rotation sentence order', () {
+      expect(PhraseBuilder.rotation('barley', 7), [
+        'crop.barley',
+        'adv.rot3',
+        'num.7',
+        'word.outof',
+        'num.10',
+        'adv.not_guarantee',
+      ]);
+    });
+
+    test('all Darija and Arabic is draft, never marked approved', () {
       expect(phrases.phrases.values.every((p) => !p.reviewed), isTrue);
       expect(darijaReviewed, isFalse);
     });
 
     test('TTS text for Darija is the Latin script', () {
-      expect(phrases['num.8']!.ttsText(AppLang.ar), 'tmnya');
+      expect(phrases['num.8']!.ttsText(AppLang.dar), 'tmnya');
+      expect(
+        phrases['num.8']!.ttsText(AppLang.ar),
+        'ثمانية',
+      ); // MSA is spoken as Arabic script
+      expect(phrases['num.8']!.text(AppLang.dar), 'تمنية');
       expect(phrases['num.8']!.ttsText(AppLang.en), 'eight');
     });
   });

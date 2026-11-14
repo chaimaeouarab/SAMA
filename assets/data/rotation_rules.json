@@ -1,0 +1,21 @@
+{
+ "_note": "Rotation rules live in data, not code. Sources are TODO(source) (docs/SOURCES.md). Rules only raise a visible flag; no yield number is changed by an unsourced rule.",
+ "sameFamilyFlag": {
+  "severity": "caution",
+  "source": "TODO(source)",
+  "reason": "Same botanical family two seasons in a row can build up pests and diseases."
+ },
+ "strongAvoid": [
+  {
+   "family": "Solanaceae",
+   "after": "Solanaceae",
+   "severity": "caution",
+   "source": "TODO(source)"
+  }
+ ],
+ "legumeCredit": {
+  "affectsWater": false,
+  "source": "TODO(source)",
+  "note": "A legume can leave nitrogen for the next crop. This changes fertiliser need, not water need, so SAMA does not change water or yield for it."
+ }
+}

@@ -4,16 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/colors.dart';
 import '../../state/farm_state.dart';
-import '../../state/results_provider.dart';
 import '../../state/settings.dart';
 import '../../voice/phrase_builder.dart';
 import '../../widgets/common.dart';
 import '../../widgets/crop_art.dart';
 import '../../widgets/speaker.dart';
-import '../home/field_setup_screen.dart';
-
-Status statusOf(double p) =>
-    p >= 0.7 ? Status.good : (p >= 0.4 ? Status.warn : Status.bad);
+import '../farm/farm_inputs_screen.dart';
 
 class CropDetailScreen extends ConsumerWidget {
   const CropDetailScreen({super.key, required this.cropId});
@@ -23,15 +19,12 @@ class CropDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = trOf(ref);
     final lang = ref.watch(langProvider);
-    final model = ref.watch(fieldModelProvider);
     final farm = ref.watch(farmProvider);
 
-    return AsyncBody(
-      value: model,
-      onRetry: () => ref.invalidate(fieldModelProvider),
+    return ModelBody(
       builder: (m) {
         final c = m.catalog.byId(cropId);
-        final p = m.chances[c.id];
+        final p = c.eligible ? m.chance(c.id) : null;
         final same = m.catalog.inCategory(c.category);
         final inTen = p == null ? null : (p * 10).round();
         return ListView(
@@ -115,7 +108,7 @@ class CropDetailScreen extends ConsumerWidget {
                               c.name(lang.code),
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                            if (p == null)
+                            if (!c.annual)
                               Text(
                                 t('perennial'),
                                 style: const TextStyle(
@@ -123,8 +116,13 @@ class CropDetailScreen extends ConsumerWidget {
                                   fontWeight: FontWeight.w700,
                                 ),
                               )
-                            else
-                              StatusLine(statusOf(p), t('chance')),
+                            else ...[
+                              ChanceStatus(p),
+                              Text(
+                                p == null ? t('no_ky') : t('chance'),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -153,8 +151,9 @@ class CropDetailScreen extends ConsumerWidget {
                       ),
                       AreaStepper(
                         value: farm.areaHa,
-                        onChanged: (v) =>
-                            ref.read(farmProvider.notifier).update(areaHa: v),
+                        onChanged: (v) => ref
+                            .read(farmsProvider.notifier)
+                            .update((f) => f.copyWith(areaHa: v)),
                       ),
                     ],
                   ),
@@ -165,7 +164,7 @@ class CropDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    p == null
+                    !c.annual
                         ? '${t('cd_${c.category}')} ${t('notmodel')}'
                         : t('cd_${c.category}'),
                     style: const TextStyle(
@@ -204,10 +203,22 @@ class CropDetailScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  if (p != null)
+                  if (c.annual)
                     FilledButton(
-                      onPressed: () => context.go('/futures/${c.id}'),
+                      onPressed: () => context.go('/time?crop=${c.id}'),
                       child: Text(t('see3')),
+                    ),
+                  if (c.annual)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(56),
+                          shape: const StadiumBorder(),
+                        ),
+                        onPressed: () => context.go('/why?crop=${c.id}'),
+                        child: Text(t('why')),
+                      ),
                     ),
                   const SourceNote(),
                   const SizedBox(height: 8),

@@ -17,15 +17,17 @@ class CropFilter extends Notifier<String> {
 
 final cropFilterProvider = NotifierProvider<CropFilter, String>(CropFilter.new);
 
-/// Annual crops by chance, then alphabetical; trees last (alphabetical).
+/// Annual crops with a documented Ky first (by chance, then name), then annual crops that need more
+/// information, then trees (all alphabetical).
 List<Crop> sortedCrops(FieldModel m, String filter, String lang) {
   final list = m.catalog.crops
       .where((c) => filter == 'all' || c.category == filter)
       .toList();
+  int rank(Crop c) => c.eligible ? 0 : (c.annual ? 1 : 2);
   list.sort((a, b) {
-    if (a.annual != b.annual) return a.annual ? -1 : 1;
-    if (a.annual) {
-      final d = m.chances[b.id]!.compareTo(m.chances[a.id]!);
+    if (rank(a) != rank(b)) return rank(a).compareTo(rank(b));
+    if (a.eligible) {
+      final d = m.chance(b.id)!.compareTo(m.chance(a.id)!);
       if (d != 0) return d;
     }
     return a.name(lang).compareTo(b.name(lang));
@@ -41,7 +43,6 @@ class CropsScreen extends ConsumerWidget {
     final t = trOf(ref);
     final lang = ref.watch(langProvider);
     final filter = ref.watch(cropFilterProvider);
-    final model = ref.watch(fieldModelProvider);
 
     return ListView(
       padding: const EdgeInsets.only(bottom: 24),
@@ -73,9 +74,7 @@ class CropsScreen extends ConsumerWidget {
             ],
           ),
         ),
-        AsyncBody(
-          value: model,
-          onRetry: () => ref.invalidate(fieldModelProvider),
+        ModelBody(
           builder: (m) {
             final list = sortedCrops(m, filter, lang.code);
             if (list.isEmpty) return const EmptyView();
@@ -90,7 +89,10 @@ class CropsScreen extends ConsumerWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   for (final c in list)
-                    CropCard(crop: c, chance: m.chances[c.id]),
+                    CropCard(
+                      crop: c,
+                      chance: c.eligible ? m.chance(c.id) : null,
+                    ),
                 ],
               ),
             );
@@ -102,7 +104,7 @@ class CropsScreen extends ConsumerWidget {
   }
 }
 
-/// Photo card: name + chance (annual) or "Perennial" (trees).
+/// Photo card: name + chance (annual with documented Ky), "?" (annual, needs information) or "Perennial" (trees).
 class CropCard extends ConsumerWidget {
   const CropCard({super.key, required this.crop, required this.chance});
   final Crop crop;
@@ -112,8 +114,10 @@ class CropCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lang = ref.watch(langProvider);
     final t = trOf(ref);
-    final label =
-        '${crop.name(lang.code)} · ${chance == null ? t('perennial') : '${(chance! * 100).round()}%'}';
+    final tail = !crop.annual
+        ? t('perennial')
+        : (chance == null ? '?' : '${(chance! * 100).round()}%');
+    final label = '${crop.name(lang.code)} · $tail';
     return Semantics(
       button: true,
       label: label,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/colors.dart';
+import '../../state/farm_state.dart';
 import '../../state/settings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/language_sheet.dart';
@@ -16,6 +17,7 @@ class MeScreen extends ConsumerWidget {
     final t = trOf(ref);
     final lang = ref.watch(langProvider);
     final s = ref.watch(settingsProvider);
+    final farm = ref.watch(farmProvider);
     final n = ref.read(settingsProvider.notifier);
 
     Widget label(IconData i, String k) => Padding(
@@ -66,6 +68,34 @@ class MeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      t('farm_title'),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      '${farm.name} · ${farm.lat.toStringAsFixed(3)}, ${farm.lon.toStringAsFixed(3)}',
+                    ),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        TextButton(
+                          onPressed: () => context.go('/farm/location'),
+                          child: Text(t('loc_search')),
+                        ),
+                        TextButton(
+                          onPressed: () => context.go('/farm/inputs'),
+                          child: Text(t('edit')),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              SamaCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       t('mode'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -87,6 +117,11 @@ class MeScreen extends ConsumerWidget {
                       selected: {s.advisor},
                       onSelectionChanged: (v) => n.setAdvisor(v.first),
                     ),
+                    if (s.advisor)
+                      TextButton(
+                        onPressed: () => context.go('/assumptions'),
+                        child: Text(t('adv_assumptions')),
+                      ),
                   ],
                 ),
               ),
@@ -128,27 +163,29 @@ class MeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      t('field'),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    TextButton(
-                      onPressed: () => context.go('/field'),
-                      child: Text(t('edit')),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              SamaCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
                       t('about'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 4),
                     Text(t('source')),
+                    const SizedBox(height: 8),
+                    Text(
+                      t('credits'),
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      t('credits_note'),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      t('prov_params'),
+                      style: const TextStyle(
+                        color: SamaColors.amber,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                      ),
+                    ),
                   ],
                 ),
               ),
