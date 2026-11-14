@@ -107,13 +107,16 @@ class _WhyScreenState extends ConsumerState<WhyScreen> {
                                   sideTitles: SideTitles(
                                     showTitles: true,
                                     interval: 10,
-                                    getTitlesWidget: (v, _) => Text(
-                                      "'${(84 + v.toInt()) % 100}".padLeft(
-                                        3,
-                                        '0',
-                                      ),
-                                      style: const TextStyle(fontSize: 11),
-                                    ),
+                                    // One label every 10 seasons (the chart asks for every bar otherwise).
+                                    getTitlesWidget: (v, _) =>
+                                        v.toInt() % 10 != 0
+                                        ? const SizedBox.shrink()
+                                        : Text(
+                                            '${1984 + v.toInt()}',
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                   ),
                                 ),
                               ),

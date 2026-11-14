@@ -58,6 +58,12 @@ const Map<String, List<String>> _s = {
     'Pluie (30 j)',
   ],
   'wind': ['الريح', 'الرياح', 'Wind', 'Vent'],
+  'cell_alt': [
+    'علو المربع (ناسا)',
+    'ارتفاع خلية ناسا',
+    'NASA cell altitude',
+    'Altitude cellule NASA',
+  ],
   'pressure': ['الضغط', 'الضغط', 'Pressure', 'Pression'],
   'sunrise': ['الشروق', 'الشروق', 'Sunrise', 'Lever'],
   'sunset': ['الغروب', 'الغروب', 'Sunset', 'Coucher'],

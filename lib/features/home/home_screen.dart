@@ -396,7 +396,6 @@ class _WeatherCard extends ConsumerWidget {
     final tmax = c.climToday('T2M_MAX', now);
     final tmin = c.climToday('T2M_MIN', now);
     final wind = c.climToday('WS2M', now);
-    final ps = c.climToday('PS', now);
     final sun = sunTimes(
       lat: farm.lat,
       lon: farm.lon,
@@ -477,10 +476,9 @@ class _WeatherCard extends ConsumerWidget {
                 t('wind'),
                 wind == null ? '–' : '${(wind * 3.6).round()} km/h',
               ),
-              _Stat(
-                t('pressure'),
-                ps == null ? '–' : '${(ps * 10).round()} hPa',
-              ),
+              // Pressure is for the NASA cell's altitude (not the town's), so it would look wrong to a
+              // farmer. Show that altitude instead, labelled as the cell's.
+              _Stat(t('cell_alt'), '${c.elev.round()} m'),
             ],
           ),
           const SizedBox(height: 10),
