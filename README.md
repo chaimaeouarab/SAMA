@@ -3,7 +3,7 @@
 **NASA Space Apps Challenge 2026, Meknès · Challenge: Field Shift: Adapting Farms with NASA Data**
 
 **Team: The Astravia**, Euromed University of Fes, Morocco
-Hajar Belghali (team leader) · Chaimae Ouarab · Houd Fattouh
+Hajar Belghali (team leader) · Chaimae Ouarab · Houda Fattouh
 
 SAMA is a mobile app that helps small farmers in Morocco decide **what to plant, how much water to plan for, when to act, and what risk to watch**. It turns 40 years of NASA POWER data (1984–2024) into clear answers, with the real seasons shown behind each one.
 
