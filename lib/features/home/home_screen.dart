@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,8 +14,9 @@ import '../../state/settings.dart';
 import '../../voice/phrase_builder.dart';
 import '../../widgets/common.dart';
 import '../../widgets/crop_art.dart';
-import '../../widgets/language_sheet.dart';
+import '../../widgets/motion.dart';
 import '../../widgets/speaker.dart';
+import '../advisor/advisor_dashboard.dart';
 import '../voice_assistant/voice_sheet.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -23,6 +26,9 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lang = ref.watch(langProvider);
     final t = trOf(ref);
+    if (ref.watch(settingsProvider.select((x) => x.advisor))) {
+      return const AdvisorDashboard();
+    }
     final model = ref.watch(modelProvider);
     final farm = ref.watch(farmProvider);
     final now = DateTime.now();
@@ -82,30 +88,6 @@ class HomeScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () => showLanguageSheet(context, ref),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: const BorderSide(
-                          color: Colors.white70,
-                          width: 1.5,
-                        ),
-                        minimumSize: const Size(56, 44),
-                      ),
-                      child: Semantics(
-                        label: t('change_language'),
-                        child: Text(lang.label),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const CircleAvatar(
-                      radius: 23,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person_outline,
-                        color: SamaColors.green,
-                      ),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -146,170 +128,178 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: AsyncBody(
-            value: model,
-            onRetry: () => ref.invalidate(modelProvider),
-            builder: (m) => _WeatherCard(farm: farm, m: m, now: now),
+        FadeSlideIn(
+          index: 1,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: AsyncBody(
+              value: model,
+              onRetry: () => ref.invalidate(modelProvider),
+              builder: (m) => _WeatherCard(farm: farm, m: m, now: now),
+            ),
           ),
         ),
         const SizedBox(height: 12),
-        Column(
-          children: [
-            _FarmRow(farm: farm),
-            _Section(
-              title: t('know'),
-              child: Row(
-                children: [
-                  for (final a in const [
-                    ('d_crop', Icons.eco_outlined, SamaColors.green, 'crop'),
-                    (
-                      'd_water',
-                      Icons.water_drop_outlined,
-                      SamaColors.water,
-                      'water',
-                    ),
-                    (
-                      'd_timing',
-                      Icons.calendar_month_outlined,
-                      SamaColors.amber,
-                      'timing',
-                    ),
-                    (
-                      'd_risk',
-                      Icons.shield_outlined,
-                      SamaColors.danger,
-                      'risk',
-                    ),
-                  ])
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Semantics(
-                          button: true,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(16),
-                            onTap: () => context.go('/guided/${a.$4}'),
-                            child: Container(
-                              constraints: const BoxConstraints(minHeight: 96),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                                boxShadow: samaCardShadow,
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: a.$3.withValues(alpha: 0.12),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Icon(a.$2, color: a.$3),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    t(a.$1),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+        FadeSlideIn(
+          index: 3,
+          child: Column(
+            children: [
+              _FarmRow(farm: farm),
+              _Section(
+                title: t('know'),
+                child: Row(
+                  children: [
+                    for (final a in const [
+                      ('d_crop', Icons.eco_outlined, SamaColors.green, 'crop'),
+                      (
+                        'd_water',
+                        Icons.water_drop_outlined,
+                        SamaColors.water,
+                        'water',
                       ),
-                    ),
-                ],
-              ),
-            ),
-            _Section(
-              title: t('best'),
-              trailing: TextButton(
-                onPressed: () => context.go('/crops'),
-                child: Text(t('all')),
-              ),
-              child: AsyncBody(
-                value: model,
-                onRetry: () => ref.invalidate(modelProvider),
-                builder: (m) => SizedBox(
-                  height: 140,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (final c in m.rankedEligible.take(6))
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 12),
+                      (
+                        'd_timing',
+                        Icons.calendar_month_outlined,
+                        SamaColors.amber,
+                        'timing',
+                      ),
+                      (
+                        'd_risk',
+                        Icons.shield_outlined,
+                        SamaColors.danger,
+                        'risk',
+                      ),
+                    ])
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Semantics(
                             button: true,
-                            label: c.name(lang.code),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(16),
-                              onTap: () => context.go('/crop/${c.id}'),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: SizedBox(
-                                  width: 160,
-                                  height: 136,
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      CropImage(c),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional.bottomStart,
-                                        child: Container(
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.fromLTRB(
-                                            10,
-                                            18,
-                                            10,
-                                            8,
-                                          ),
-                                          decoration: const BoxDecoration(
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                                Colors.transparent,
-                                                Color(0x99000000),
-                                              ],
-                                            ),
-                                          ),
-                                          child: Text(
-                                            '${c.name(lang.code)} · ${(m.chance(c.id)! * 100).round()}%',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
+                              onTap: () => context.go('/guided/${a.$4}'),
+                              child: Container(
+                                constraints: const BoxConstraints(
+                                  minHeight: 96,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: samaCardShadow,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: a.$3.withValues(alpha: 0.12),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                    ],
-                                  ),
+                                      child: Icon(a.$2, color: a.$3),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      t(a.$1),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                    ],
+                      ),
+                  ],
+                ),
+              ),
+              _Section(
+                title: t('best'),
+                trailing: TextButton(
+                  onPressed: () => context.go('/crops'),
+                  child: Text(t('all')),
+                ),
+                child: AsyncBody(
+                  value: model,
+                  onRetry: () => ref.invalidate(modelProvider),
+                  builder: (m) => SizedBox(
+                    height: 140,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        for (final c in m.rankedEligible.take(6))
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(end: 12),
+                            child: Semantics(
+                              button: true,
+                              label: c.name(lang.code),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(16),
+                                onTap: () => context.go('/crop/${c.id}'),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: SizedBox(
+                                    width: 160,
+                                    height: 136,
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        CropImage(c),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional.bottomStart,
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.fromLTRB(
+                                              10,
+                                              18,
+                                              10,
+                                              8,
+                                            ),
+                                            decoration: const BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Colors.transparent,
+                                                  Color(0x99000000),
+                                                ],
+                                              ),
+                                            ),
+                                            child: Text(
+                                              '${c.name(lang.code)} · ${(m.chance(c.id)! * 100).round()}%',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SourceNote(),
-            const SizedBox(height: 24),
-          ],
+              const SourceNote(),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ],
     );
@@ -437,14 +427,18 @@ class _WeatherCard extends ConsumerWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      temp == null
-                          ? '–'
-                          : '${temp >= 0 ? '+' : ''}${temp.round()}',
-                      style: const TextStyle(
-                        fontSize: 44,
-                        fontWeight: FontWeight.w800,
-                        height: 1.1,
+                    // Numbers keep their sign on the left even in right-to-left languages.
+                    Directionality(
+                      textDirection: ui.TextDirection.ltr,
+                      child: Text(
+                        temp == null
+                            ? '–'
+                            : '${temp >= 0 ? '+' : ''}${temp.round()}',
+                        style: const TextStyle(
+                          fontSize: 44,
+                          fontWeight: FontWeight.w800,
+                          height: 1.1,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 6),

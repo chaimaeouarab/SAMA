@@ -304,10 +304,17 @@ void main() {
       expect(s.startYear, 1994);
       expect(s.rainySeasonRain, closeTo(293.2, 0.1));
       final et0 = et0Season(s, lat: p.srcLat, elev: p.elev);
-      expect(et0.values[0], closeTo(2.911, 0.005)); // 1 Oct 1994, Tmax 19.4, Tmin 8.1, RH 72.3, u2 1.1, Rs 20.9
+      expect(
+        et0.values[0],
+        closeTo(2.911, 0.005),
+      ); // 1 Oct 1994, Tmax 19.4, Tmin 8.1, RH 72.3, u2 1.1, Rs 20.9
       expect(et0.values.fold(0.0, (a, b) => a + b), closeTo(1333.2, 0.5));
       final o = simulateSeason(
-          crop: data.catalog.byId('softwheat').model!, season: s, et0: et0.values, farm: const FarmParams(soilDepthM: 1.0, irrigationMm: 0));
+        crop: data.catalog.byId('softwheat').model!,
+        season: s,
+        et0: et0.values,
+        farm: const FarmParams(soilDepthM: 1.0, irrigationMm: 0),
+      );
       expect(o.et0Cycle, closeTo(483.9, 0.5));
       expect(o.etc, closeTo(400.1, 0.5));
       expect(o.eta, closeTo(238.9, 0.5));

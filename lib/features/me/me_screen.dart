@@ -7,6 +7,7 @@ import '../../state/farm_state.dart';
 import '../../state/settings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/language_sheet.dart';
+import '../../widgets/sama_logo.dart';
 
 /// No share, no account, no login.
 class MeScreen extends ConsumerWidget {
@@ -162,6 +163,8 @@ class MeScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Center(child: SamaLogo(height: 70)),
+                    const SizedBox(height: 8),
                     Text(
                       t('about'),
                       style: Theme.of(context).textTheme.titleMedium,

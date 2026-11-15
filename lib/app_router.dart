@@ -24,6 +24,7 @@ import 'features/why/why_screen.dart';
 import 'state/settings.dart';
 import 'voice/audio_player_service.dart';
 import 'widgets/common.dart';
+import 'widgets/logo_bar.dart';
 
 /// Stops any speech when the screen changes.
 class _StopSpeechObserver extends NavigatorObserver {
@@ -205,6 +206,7 @@ class ShellScaffold extends ConsumerWidget {
         bottom: false,
         child: Column(
           children: [
+            const LogoBar(),
             const OfflineBadge(),
             const DataBanners(),
             Expanded(child: child),
@@ -242,7 +244,7 @@ class ShellScaffold extends ConsumerWidget {
                             Icon(
                               idx == i ? tabs[i].$3 : tabs[i].$2,
                               color: idx == i
-                                  ? SamaColors.green
+                                  ? (advisor ? advisorColor : SamaColors.green)
                                   : SamaColors.muted,
                             ),
                             Text(
@@ -255,7 +257,9 @@ class ShellScaffold extends ConsumerWidget {
                                     ? FontWeight.w800
                                     : FontWeight.w600,
                                 color: idx == i
-                                    ? SamaColors.green
+                                    ? (advisor
+                                          ? advisorColor
+                                          : SamaColors.green)
                                     : SamaColors.muted,
                               ),
                             ),

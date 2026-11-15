@@ -18,6 +18,7 @@ import 'package:sama/state/farm_state.dart';
 import 'package:sama/state/results_provider.dart';
 import 'package:sama/state/settings.dart';
 import 'package:sama/widgets/common.dart';
+import 'package:sama/widgets/sama_logo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late AppData data;
@@ -651,10 +652,10 @@ void main() {
         for (final l in ['Dashboard', 'Farms', 'Explore', 'Analysis', 'Me']) {
           expect(find.text(l), findsWidgets, reason: l);
         }
-        await tester.tap(find.text('Farms'));
+        await tester.tap(find.text('Farms').last);
         await tester.pumpAndSettle();
         expect(find.text('Add a farm'), findsOneWidget);
-        await tester.tap(find.text('Analysis'));
+        await tester.tap(find.text('Analysis').last);
         await tester.pumpAndSettle();
         expect(find.text('Data provenance'), findsOneWidget);
       },
@@ -698,6 +699,57 @@ void main() {
         expect(find.textContaining('changed'), findsNothing);
       },
     );
+  });
+
+  group('logo on every screen and two different roles', () {
+    testWidgets('the SAMA logo stays at the top of every screen of the shell', (
+      tester,
+    ) async {
+      await pumpApp(tester, prefs: {'lang': 'en', 'langMigrated2': true});
+      for (final tab in ['Explore', 'Crops', 'Results', 'Me', 'Home']) {
+        await tester.tap(find.text(tab).last);
+        await tester.pumpAndSettle();
+        expect(find.byType(SamaLogo), findsWidgets, reason: tab);
+      }
+    });
+
+    testWidgets('the first page shows the logo too', (tester) async {
+      await pumpApp(tester);
+      expect(find.byType(SamaLogo), findsOneWidget);
+    });
+
+    testWidgets(
+      'Farmer home is visual (weather, big tiles); Advisor home is a numeric dashboard',
+      (tester) async {
+        await pumpApp(tester, prefs: {'lang': 'en', 'langMigrated2': true});
+        expect(find.text('Advisor dashboard'), findsNothing);
+        expect(
+          find.text('Farmer'),
+          findsOneWidget,
+        ); // role badge in the logo bar
+        expect(find.textContaining('Typical for today'), findsOneWidget);
+      },
+    );
+
+    testWidgets('Advisor: own dashboard, role badge, alerts and numbers', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        prefs: {'lang': 'en', 'langMigrated2': true, 'advisor': true},
+      );
+      expect(find.text('Advisor'), findsOneWidget); // role badge
+      expect(find.text('Advisor dashboard'), findsOneWidget);
+      expect(find.text('Alerts'), findsOneWidget);
+      expect(
+        find.textContaining('Missing inputs'),
+        findsOneWidget,
+      ); // soil / irrigation / previous crop unknown
+      expect(
+        find.textContaining('Typical for today'),
+        findsNothing,
+      ); // not the farmer's weather card
+    });
   });
 
   group('states', () {
